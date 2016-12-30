@@ -220,3 +220,269 @@ describe('vAlign', () => {
         );
     });
 });
+
+describe('inline', () => {
+    it('should generate display: inline', () => {
+        return process(
+            `.block {
+                inline();
+            }`,
+            `.block {
+                display: inline;
+            }`,
+            mixins
+        );
+    });
+});
+
+describe('inlineBlock', () => {
+    it('should generate display: inline-block', () => {
+        return process(
+            `.block {
+                inlineBlock();
+            }`,
+            `.block {
+                display: inline-block;
+            }`,
+            mixins
+        );
+    });
+
+    it('should generate display: inline-block with specified width with default unit', () => {
+        return process(
+            `.block {
+                inlineBlock(20);
+            }`,
+            `.block {
+                display: inline-block;
+                width: 20rem;
+            }`,
+            mixins
+        );
+    });
+
+    it('should generate display: inline-block with specified width and height with default unit', () => {
+        return process(
+            `.block {
+                inlineBlock(20, 30);
+            }`,
+            `.block {
+                display: inline-block;
+                height: 30rem;
+                width: 20rem;
+            }`,
+            mixins
+        );
+    });
+
+    it('should generate display: inline-block with specified width and height with override unit', () => {
+        return process(
+            `.block {
+                inlineBlock(20px, 30em);
+            }`,
+            `.block {
+                display: inline-block;
+                height: 30em;
+                width: 20px;
+            }`,
+            mixins
+        );
+    });
+
+    it('should generate display: inline-block with specified width and height with default unit', () => {
+        return process(
+            `.block {
+                inlineBlock(width: 20, height: 20);
+            }`,
+            `.block {
+                display: inline-block;
+                width: 20rem;
+                height: 20rem;
+            }`,
+            mixins
+        );
+    });
+
+    it('should generate display: inline-block with specified parameters', () => {
+        return process(
+            `.block {
+                inlineBlock(height: 20);
+            }`,
+            `.block {
+                display: inline-block;
+                height: 20rem;
+            }`,
+            mixins
+        );
+    });
+});
+
+describe('block', () => {
+    it('should generate display: block', () => {
+        return process(
+            `.block {
+                block();
+            }`,
+            `.block {
+                display: block;
+            }`,
+            mixins
+        );
+    });
+
+    it('should generate display: inline with specified width with default unit', () => {
+        return process(
+            `.block {
+                block(20);
+            }`,
+            `.block {
+                display: block;
+                width: 20rem;
+            }`,
+            mixins
+        );
+    });
+
+    it('should generate display: inline with specified width and height with default unit', () => {
+        return process(
+            `.block {
+                block(20, 30);
+            }`,
+            `.block {
+                display: block;
+                height: 30rem;
+                width: 20rem;
+            }`,
+            mixins
+        );
+    });
+
+    it('should generate display: inline with specified width and height with override unit', () => {
+        return process(
+            `.block {
+                block(20px, 30em);
+            }`,
+            `.block {
+                display: block;
+                height: 30em;
+                width: 20px;
+            }`,
+            mixins
+        );
+    });
+
+    it('should generate display: inline with specified width and height with default unit', () => {
+        return process(
+            `.block {
+                block(width: 20, height: 20);
+            }`,
+            `.block {
+                display: block;
+                width: 20rem;
+                height: 20rem;
+            }`,
+            mixins
+        );
+    });
+
+    it('should generate display: inline with specified parameters', () => {
+        return process(
+            `.block {
+                block(height: 20);
+            }`,
+            `.block {
+                display: block;
+                height: 20rem;
+            }`,
+            mixins
+        );
+    });
+});
+
+describe('centeredBlock', () => {
+    it('should generate display: block with centered margins', () => {
+        return process(
+            `.block {
+                centeredBlock();
+            }`,
+            `.block {
+                display: block;
+                margin: 0 auto;
+            }`,
+            mixins
+        );
+    });
+
+    it('should generate display: block with centered margins with specified width with default unit', () => {
+        return process(
+            `.block {
+                centeredBlock(20);
+            }`,
+            `.block {
+                display: block;
+                width: 20rem;
+                margin: 0 auto;
+            }`,
+            mixins
+        );
+    });
+
+    it('should generate display: block with centered margins with specified width and height with default unit', () => {
+        return process(
+            `.block {
+                centeredBlock(20, 30);
+            }`,
+            `.block {
+                display: block;
+                height: 30rem;
+                width: 20rem;
+                margin: 0 auto;
+            }`,
+            mixins
+        );
+    });
+
+    it('should generate display: block with centered margins with specified width and height with override unit', () => {
+        return process(
+            `.block {
+                centeredBlock(20px, 30em);
+            }`,
+            `.block {
+                display: block;
+                height: 30em;
+                width: 20px;
+                margin: 0 auto;
+            }`,
+            mixins
+        );
+    });
+
+    it('should generate display: block with centered margins with specified width and height with default unit', () => {
+        return process(
+            `.block {
+                centeredBlock(width: 20, height: 20);
+            }`,
+            `.block {
+                display: block;
+                width: 20rem;
+                height: 20rem;
+                margin: 0 auto;
+            }`,
+            mixins
+        );
+    });
+
+    it('should generate display: block with centered margins with specified parameters', () => {
+        return process(
+            `.block {
+                centeredBlock(height: 20);
+            }`,
+            `.block {
+                display: block;
+                height: 20rem;
+                margin: 0 auto;
+            }`,
+            mixins
+        );
+    });
+});
