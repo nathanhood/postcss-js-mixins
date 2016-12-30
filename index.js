@@ -1,7 +1,8 @@
-const mixins = require('./mixins.js');
+'use strict';
+
 const postcss = require('postcss');
 
-module.exports = postcss.plugin('postcss-mixins', (options = {}) => {
+module.exports = postcss.plugin('postcss-js-mixins', (options = {}) => {
 	let mixins = options.mixins || {};
 
 	/**
