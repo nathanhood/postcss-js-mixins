@@ -486,3 +486,151 @@ describe('centeredBlock', () => {
         );
     });
 });
+
+describe('display', () => {
+    it('should output supplied display value', () => {
+        return process(
+            `.block {
+                display(block);
+            }`,
+            `.block {
+                display: block;
+            }`,
+            mixins
+        );
+    });
+});
+
+describe('hide', () => {
+    it('should output display: none', () => {
+        return process(
+            `.block {
+                hide();
+            }`,
+            `.block {
+                display: none;
+            }`,
+            mixins
+        );
+    });
+});
+
+describe('show', () => {
+    it('should output display: inherit', () => {
+        return process(
+            `.block {
+                show();
+            }`,
+            `.block {
+                display: inherit;
+            }`,
+            mixins
+        );
+    });
+});
+
+describe('visibility', () => {
+    it('should output supplied visibility value ', () => {
+        return process(
+            `.block {
+                visibility(hidden);
+            }`,
+            `.block {
+                visibility: hidden;
+            }`,
+            mixins
+        );
+    });
+});
+
+describe('visible', () => {
+    it('should output visibility: visible ', () => {
+        return process(
+            `.block {
+                visible();
+            }`,
+            `.block {
+                visibility: visible;
+            }`,
+            mixins
+        );
+    });
+});
+
+describe('hidden', () => {
+    it('should output visibility: hidden', () => {
+        return process(
+            `.block {
+                hidden();
+            }`,
+            `.block {
+                visibility: hidden;
+            }`,
+            mixins
+        );
+    });
+});
+
+describe('spaced', () => {
+    it('should output default value as margin-bottom', () => {
+        return process(
+            `.block {
+                spaced();
+            }`,
+            `.block {
+                margin-bottom: 2rem;
+            }`,
+            mixins
+        );
+    });
+
+    it('should output supplied value as margin-bottom', () => {
+        return process(
+            `.block {
+                spaced(10);
+            }`,
+            `.block {
+                margin-bottom: 10rem;
+            }`,
+            mixins
+        );
+    });
+});
+
+describe('margin', () => {
+    it('specified margin value and direction', () => {
+        return process(
+            `.block {
+                margin(20, bottom);
+            }`,
+            `.block {
+                margin-bottom: 20rem;
+            }`,
+            mixins
+        );
+    });
+
+    it('should output supplied value as margin-bottom', () => {
+        return process(
+            `.block {
+                spaced(10);
+            }`,
+            `.block {
+                margin-bottom: 10rem;
+            }`,
+            mixins
+        );
+    });
+
+    it('should output supplied string value as margin', () => {
+        return process(
+            `.block {
+                margin(0 auto);
+            }`,
+            `.block {
+                margin: 0 auto;
+            }`,
+            mixins
+        );
+    });
+});
