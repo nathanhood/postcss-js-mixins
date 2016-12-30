@@ -182,3 +182,41 @@ describe('align', () => {
         );
     });
 });
+
+describe('vAlign', () => {
+    it('should generate vertical-align declaration', () => {
+        return process(
+            `.block {
+                vAlign(middle);
+            }`,
+            `.block {
+                vertical-align: middle;
+            }`,
+            mixins
+        );
+    });
+
+    it('should generate vertical-align declaration with unit value', () => {
+        return process(
+            `.block {
+                vAlign(10);
+            }`,
+            `.block {
+                vertical-align: 10rem;
+            }`,
+            mixins
+        );
+    });
+
+    it('should generate vertical-align declaration with unit value', () => {
+        return process(
+            `.block {
+                vAlign(10px);
+            }`,
+            `.block {
+                vertical-align: 10px;
+            }`,
+            mixins
+        );
+    });
+});
