@@ -37,7 +37,7 @@ module.exports = postcss.plugin('postcss-js-mixins', (options = {}) => {
 	 * @param {object} node - postcss.Mixin
 	 */
 	function createDeclarations(data, node) {
-		data.map(decl => {
+		return data.map(decl => {
 			return createDeclaration(decl, node);
 		});
 	}
