@@ -15,7 +15,10 @@ module.exports = postcss.plugin('postcss-js-mixins', (options = {}) => {
 	function evalMixin(node, result) {
 		let segs = node.name.split('.'),
 			key = segs.shift(),
-			mixin = mixins[key];
+			mixin = mixins[key],
+			args = node.arguments.map(arg => {
+				return arg.length ? arg : undefined;
+			});
 
 		while (segs.length && mixin.hasOwnProperty(segs[0])) {
 			mixin = mixin[segs[0]];
@@ -27,7 +30,7 @@ module.exports = postcss.plugin('postcss-js-mixins', (options = {}) => {
 			return [];
 		}
 
-		return mixin.apply(mixins, node.arguments);
+		return mixin.apply(mixins, args);
 	}
 
 	/**
