@@ -1060,3 +1060,72 @@ describe('size', () => {
 		);
 	});
 });
+
+describe('minSize', () => {
+	it('should use first argument for width and height with default unit', () => {
+		return process(
+			`.block {
+				minSize(100);
+			}`,
+			`.block {
+				min-width: 100rem;
+				min-height: 100rem;
+			}`,
+			mixins
+		);
+	});
+
+	it('should use first argument for width and height with override unit', () => {
+		return process(
+			`.block {
+				minSize(100%);
+			}`,
+			`.block {
+				min-width: 100%;
+				min-height: 100%;
+			}`,
+			mixins
+		);
+	});
+
+	it('should use arguments for width and height', () => {
+		return process(
+			`.block {
+				minSize(100%, 20%);
+			}`,
+			`.block {
+				min-width: 100%;
+				min-height: 20%;
+			}`,
+			mixins
+		);
+	});
+});
+
+describe('bold', () => {
+	it('should output font-weight with default bold font weight', () => {
+		return process(
+			`.block {
+				bold();
+			}`,
+			`.block {
+				font-weight: 600;
+			}`,
+			mixins
+		);
+	});
+});
+
+describe('italic', () => {
+	it('should output italic font', () => {
+		return process(
+			`.block {
+				italic();
+			}`,
+			`.block {
+				font-style: italic;
+			}`,
+			mixins
+		);
+	});
+});
