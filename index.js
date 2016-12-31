@@ -73,6 +73,7 @@ module.exports = postcss.plugin('postcss-js-mixins', (options = {}) => {
 				if (Array.isArray(results)) {
 					node.replaceWith(createDeclarations(results, node));
 				} else {
+					// TODO: This works, but the raws are all out of whack
 					if (results.prop === 'rule') {
 						node.replaceWith(
 							postcss.parse(results.value)
