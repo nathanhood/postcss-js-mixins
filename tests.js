@@ -1196,4 +1196,260 @@ describe('background', () => {
 			mixins
 		);
 	});
+
+	it('should output x position as third parameter', () => {
+		return process(
+			`.block {
+				background(#fff, url('/test/test.jpg'), center);
+			}`,
+			`.block {
+				background: #fff url('/test/test.jpg') center;
+			}`,
+			mixins
+		);
+	});
+
+	it('should output y position as forth parameter', () => {
+		return process(
+			`.block {
+				background(#fff, url('/test/test.jpg'), center, center);
+			}`,
+			`.block {
+				background: #fff url('/test/test.jpg') center center;
+			}`,
+			mixins
+		);
+	});
+
+	it('should output repeat as fifth parameter', () => {
+		return process(
+			`.block {
+				background(#fff, url('/test/test.jpg'), center, center, no-repeat);
+			}`,
+			`.block {
+				background: #fff url('/test/test.jpg') center center no-repeat;
+			}`,
+			mixins
+		);
+	});
+
+	it('should output attachment as sixth parameter', () => {
+		return process(
+			`.block {
+				background(#fff, url('/test/test.jpg'), center, center, no-repeat, fixed);
+			}`,
+			`.block {
+				background: #fff url('/test/test.jpg') center center no-repeat fixed;
+			}`,
+			mixins
+		);
+	});
+});
+
+describe('border', () => {
+	it('should output default properties if no args are supplied', () => {
+		return process(
+			`.block {
+				border();
+			}`,
+			`.block {
+				border: 1px solid #bfbfbf;
+			}`,
+			mixins
+		);
+	});
+
+	it('should output border none', () => {
+		return process(
+			`.block {
+				border(0);
+				border(none);
+			}`,
+			`.block {
+				border: none;
+				border: none;
+			}`,
+			mixins
+		);
+	});
+
+	it('should output default properties with supplied color', () => {
+		return process(
+			`.block {
+				border(#000);
+			}`,
+			`.block {
+				border: 1px solid #000;
+			}`,
+			mixins
+		);
+	});
+
+	it('should output supplied string', () => {
+		return process(
+			`.block {
+				border(1px solid black);
+			}`,
+			`.block {
+				border: 1px solid black;
+			}`,
+			mixins
+		);
+	});
+
+	it('should output top border with default properties', () => {
+		return process(
+			`.block {
+				border(top);
+			}`,
+			`.block {
+				border-top: 1px solid #bfbfbf;
+			}`,
+			mixins
+		);
+	});
+
+	it('should output left border with default properties', () => {
+		return process(
+			`.block {
+				border(left);
+			}`,
+			`.block {
+				border-left: 1px solid #bfbfbf;
+			}`,
+			mixins
+		);
+	});
+
+	it('should output vertical borders with default properties', () => {
+		return process(
+			`.block {
+				border(vertical);
+			}`,
+			`.block {
+				border-left: 1px solid #bfbfbf;
+				border-right: 1px solid #bfbfbf;
+			}`,
+			mixins
+		);
+	});
+
+	it('should output horizontal borders with default properties', () => {
+		return process(
+			`.block {
+				border(horizontal);
+			}`,
+			`.block {
+				border-top: 1px solid #bfbfbf;
+				border-bottom: 1px solid #bfbfbf;
+			}`,
+			mixins
+		);
+	});
+
+	it('should output left border with supplied color', () => {
+		return process(
+			`.block {
+				border(left, #000);
+			}`,
+			`.block {
+				border-left: 1px solid #000;
+			}`,
+			mixins
+		);
+	});
+
+	it('should output top border with supplied color', () => {
+		return process(
+			`.block {
+				border(top, #000);
+			}`,
+			`.block {
+				border-top: 1px solid #000;
+			}`,
+			mixins
+		);
+	});
+
+	it('should output left and right border with supplied color', () => {
+		return process(
+			`.block {
+				border(vertical, #000);
+			}`,
+			`.block {
+				border-left: 1px solid #000;
+				border-right: 1px solid #000;
+			}`,
+			mixins
+		);
+	});
+
+	it('should output top border with supplied parameters', () => {
+		return process(
+			`.block {
+				border(top, 1px solid black);
+			}`,
+			`.block {
+				border-top: 1px solid black;
+			}`,
+			mixins
+		);
+	});
+
+	it('should output left border with supplied parameters', () => {
+		return process(
+			`.block {
+				border(left, 1px solid black);
+			}`,
+			`.block {
+				border-left: 1px solid black;
+			}`,
+			mixins
+		);
+	});
+
+	it('should output left and right border with supplied parameters', () => {
+		return process(
+			`.block {
+				border(vertical, 1px solid black);
+			}`,
+			`.block {
+				border-left: 1px solid black;
+				border-right: 1px solid black;
+			}`,
+			mixins
+		);
+	});
+
+	it('should output top and bottom border with supplied parameters', () => {
+		return process(
+			`.block {
+				border(horizontal, 1px solid black);
+			}`,
+			`.block {
+				border-top: 1px solid black;
+				border-bottom: 1px solid black;
+			}`,
+			mixins
+		);
+	});
+});
+
+// TODO: fix the raws, temporarily adjusted tabbing for passing test
+describe('clearfix', () => {
+	it('should output a nested selector', () => {
+		return process(
+			`.block {
+				clearfix();
+			}`,
+			`.block {
+				&:after {
+								clear: both;
+								content: '';
+								display: block
+				}
+			}`,
+			mixins
+		);
+	});
 });
