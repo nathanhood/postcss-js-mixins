@@ -45,6 +45,11 @@ module.exports = postcss.plugin('postcss-js-mixins', (options = {}) => {
 	 */
 	function createDeclarations(data, node) {
 		return data.map(decl => {
+
+			// TODO: temporary fix
+			if (decl.prop === 'rule') {
+				return postcss.parse(decl.value)
+			}
 			return createDeclaration(decl, node);
 		});
 	}
