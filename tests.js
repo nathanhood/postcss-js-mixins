@@ -1167,7 +1167,31 @@ describe('background', () => {
 				background(#fff, .4);
 			}`,
 			`.block {
-				background: 'this is a string';
+				background-color: rgba(255, 255, 255, 0.4);
+			}`,
+			mixins
+		);
+	});
+
+	it('should output opacity as second parameter as a percentage', () => {
+		return process(
+			`.block {
+				background(#fff, 40%);
+			}`,
+			`.block {
+				background-color: rgba(255, 255, 255, 0.4);
+			}`,
+			mixins
+		);
+	});
+
+	it('should output url() as second parameter', () => {
+		return process(
+			`.block {
+				background(#fff, url('/test/test.jpg'));
+			}`,
+			`.block {
+				background: #fff url('/test/test.jpg');
 			}`,
 			mixins
 		);
