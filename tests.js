@@ -375,8 +375,8 @@ describe('block', () => {
 			}`,
 			`.block {
 				display: block;
-				height: 30rem;
 				width: 20rem;
+				height: 30rem;
 			}`,
 			mixins
 		);
@@ -389,8 +389,8 @@ describe('block', () => {
 			}`,
 			`.block {
 				display: block;
-				height: 30em;
 				width: 20px;
+				height: 30em;
 			}`,
 			mixins
 		);
@@ -459,8 +459,8 @@ describe('centeredBlock', () => {
 			}`,
 			`.block {
 				display: block;
-				height: 30rem;
 				width: 20rem;
+				height: 30rem;
 				margin: 0 auto;
 			}`,
 			mixins
@@ -474,8 +474,8 @@ describe('centeredBlock', () => {
 			}`,
 			`.block {
 				display: block;
-				height: 30em;
 				width: 20px;
+				height: 30em;
 				margin: 0 auto;
 			}`,
 			mixins
@@ -654,6 +654,407 @@ describe('margin', () => {
 			}`,
 			`.block {
 				margin: 0 auto;
+			}`,
+			mixins
+		);
+	});
+});
+
+describe('spacedBlock', () => {
+	it('should output default value', () => {
+		return process(
+			`.block {
+				spacedBlock();
+			}`,
+			`.block {
+				margin-bottom: 2rem;
+				display: block;
+			}`,
+			mixins
+		);
+	});
+
+	it('should output supplied value as margin-bottom', () => {
+		return process(
+			`.block {
+				spacedBlock(10);
+			}`,
+			`.block {
+				margin-bottom: 10rem;
+				display: block;
+			}`,
+			mixins
+		);
+	});
+
+	it('should output supplied string value as margin-bottom and width', () => {
+		return process(
+			`.block {
+				spacedBlock(2, 10);
+			}`,
+			`.block {
+				margin-bottom: 2rem;
+				display: block;
+				width: 10rem;
+			}`,
+			mixins
+		);
+	});
+
+	it('should output supplied string value as margin-bottom, width and height', () => {
+		return process(
+			`.block {
+				spacedBlock(2, 10, 20);
+			}`,
+			`.block {
+				margin-bottom: 2rem;
+				display: block;
+				width: 10rem;
+				height: 20rem;
+			}`,
+			mixins
+		);
+	});
+
+	it('should output supplied string value as margin-bottom and width with override unit', () => {
+		return process(
+			`.block {
+				spacedBlock(2px, 10em);
+			}`,
+			`.block {
+				margin-bottom: 2px;
+				display: block;
+				width: 10em;
+			}`,
+			mixins
+		);
+	});
+
+	it('should output supplied values', () => {
+		return process(
+			`.block {
+				spacedBlock(width: 10);
+			}`,
+			`.block {
+				margin-bottom: 2rem;
+				width: 10rem;
+				display: block;
+			}`,
+			mixins
+		);
+	});
+
+	it('should output supplied values with override unit', () => {
+		return process(
+			`.block {
+				spacedBlock(width: 10px);
+			}`,
+			`.block {
+				margin-bottom: 2rem;
+				width: 10px;
+				display: block;
+			}`,
+			mixins
+		);
+	});
+});
+
+describe('opaque', () => {
+	it('output opacity: 0', () => {
+		return process(
+			`.block {
+				opaque();
+			}`,
+			`.block {
+				opacity: 1;
+			}`,
+			mixins
+		);
+	});
+});
+
+describe('transparent', () => {
+	it('output opacity: 0', () => {
+		return process(
+			`.block {
+				transparent();
+			}`,
+			`.block {
+				opacity: 0;
+			}`,
+			mixins
+		);
+	});
+});
+
+describe('font', () => {
+	it('output handle a font stack', () => {
+		return process(
+			`.block {
+				font('Open Sans, Arial, Helvetica, Banana');
+			}`,
+			`.block {
+				font-family: 'Open Sans, Arial, Helvetica, Banana';
+			}`,
+			mixins
+		);
+	});
+
+	it('output specified values', () => {
+		return process(
+			`.block {
+				font(Open Sans, 10, 300, 2, italic);
+			}`,
+			`.block {
+				font-family: Open Sans;
+				font-size: 10rem;
+				font-weight: 300;
+				line-height: 2;
+				font-style: italic;
+			}`,
+			mixins
+		);
+	});
+
+	it('output specified values by property', () => {
+		return process(
+			`.block {
+				font(style: italic, weight: 300);
+			}`,
+			`.block {
+				font-style: italic;
+				font-weight: 300;
+			}`,
+			mixins
+		);
+	});
+});
+
+describe('unstyled', () => {
+	it('output list-style: none', () => {
+		return process(
+			`.block {
+				unstyled();
+			}`,
+			`.block {
+				list-style: none;
+			}`,
+			mixins
+		);
+	});
+});
+
+describe('absolute', () => {
+	it('output absolute position by default', () => {
+		return process(
+			`.block {
+				absolute();
+			}`,
+			`.block {
+				position: absolute;
+			}`,
+			mixins
+		);
+	});
+
+	it('output absolute position with supplied arguments', () => {
+		return process(
+			`.block {
+				absolute(4, 3);
+			}`,
+			`.block {
+				position: absolute;
+				top: 4rem;
+				right: 3rem;
+			}`,
+			mixins
+		);
+	});
+
+	it('output absolute position with supplied arguments', () => {
+		return process(
+			`.block {
+				absolute(4, 3, 2, 1);
+			}`,
+			`.block {
+				position: absolute;
+				top: 4rem;
+				right: 3rem;
+				left: 2rem;
+				bottom: 1rem;
+			}`,
+			mixins
+		);
+	});
+
+	it('output absolute position with supplied arguments with override unit', () => {
+		return process(
+			`.block {
+				absolute(4px, 3em, 2pt, 1mm);
+			}`,
+			`.block {
+				position: absolute;
+				top: 4px;
+				right: 3em;
+				left: 2pt;
+				bottom: 1mm;
+			}`,
+			mixins
+		);
+	});
+
+	it('output absolute position with supplied object arguments', () => {
+		return process(
+			`.block {
+				absolute(bottom: 3, top: 4);
+			}`,
+			`.block {
+				position: absolute;
+				bottom: 3rem;
+				top: 4rem;
+			}`,
+			mixins
+		);
+	});
+
+	it('output absolute position with supplied object arguments with override unit', () => {
+		return process(
+			`.block {
+				absolute(bottom: 3px, top: 4in);
+			}`,
+			`.block {
+				position: absolute;
+				bottom: 3px;
+				top: 4in;
+			}`,
+			mixins
+		);
+	});
+});
+
+describe('fixed', () => {
+	it('output fixed position by default', () => {
+		return process(
+			`.block {
+				fixed();
+			}`,
+			`.block {
+				position: fixed;
+			}`,
+			mixins
+		);
+	});
+
+	it('output fixed position with supplied arguments', () => {
+		return process(
+			`.block {
+				fixed(4, 3);
+			}`,
+			`.block {
+				position: fixed;
+				top: 4rem;
+				right: 3rem;
+			}`,
+			mixins
+		);
+	});
+
+	it('output fixed position with supplied arguments', () => {
+		return process(
+			`.block {
+				fixed(4, 3, 2, 1);
+			}`,
+			`.block {
+				position: fixed;
+				top: 4rem;
+				right: 3rem;
+				left: 2rem;
+				bottom: 1rem;
+			}`,
+			mixins
+		);
+	});
+
+	it('output fixed position with supplied arguments with override unit', () => {
+		return process(
+			`.block {
+				fixed(4px, 3em, 2pt, 1mm);
+			}`,
+			`.block {
+				position: fixed;
+				top: 4px;
+				right: 3em;
+				left: 2pt;
+				bottom: 1mm;
+			}`,
+			mixins
+		);
+	});
+
+	it('output fixed position with supplied object arguments', () => {
+		return process(
+			`.block {
+				fixed(bottom: 3, top: 4);
+			}`,
+			`.block {
+				position: fixed;
+				bottom: 3rem;
+				top: 4rem;
+			}`,
+			mixins
+		);
+	});
+
+	it('output fixed position with supplied object arguments with override unit', () => {
+		return process(
+			`.block {
+				fixed(bottom: 3px, top: 4in);
+			}`,
+			`.block {
+				position: fixed;
+				bottom: 3px;
+				top: 4in;
+			}`,
+			mixins
+		);
+	});
+});
+
+describe('size', () => {
+	it('should use first argument for width and height with default unit', () => {
+		return process(
+			`.block {
+				size(100);
+			}`,
+			`.block {
+				width: 100rem;
+				height: 100rem;
+			}`,
+			mixins
+		);
+	});
+
+	it('should use first argument for width and height with override unit', () => {
+		return process(
+			`.block {
+				size(100%);
+			}`,
+			`.block {
+				width: 100%;
+				height: 100%;
+			}`,
+			mixins
+		);
+	});
+
+	it('should use arguments for width and height', () => {
+		return process(
+			`.block {
+				size(100%, 20%);
+			}`,
+			`.block {
+				width: 100%;
+				height: 20%;
 			}`,
 			mixins
 		);
