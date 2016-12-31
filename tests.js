@@ -1453,3 +1453,172 @@ describe('clearfix', () => {
 		);
 	});
 });
+
+// TODO: fix raws on clearfix output
+describe('row', () => {
+	it('should output margins with clearfix', () => {
+		return process(
+			`.block {
+				row();
+			}`,
+			`.block {
+				margin-left: -5%;
+				max-width: 105%;
+				&:after {
+				clear: both;
+				content: '';
+				display: block;
+			}
+			}`,
+			mixins
+		);
+	});
+});
+
+// TODO: fix raws on clearfix output
+describe('row', () => {
+	it('should output margins with clearfix with override value', () => {
+		return process(
+			`.block {
+				row(10%);
+			}`,
+			`.block {
+				margin-left: -10%;
+				max-width: 110%;
+				&:after {
+				clear: both;
+				content: '';
+				display: block;
+			}
+			}`,
+			mixins
+		);
+	});
+});
+
+describe('rowModify', () => {
+	it('should output override margins', () => {
+		return process(
+			`.block {
+				rowModify();
+			}`,
+			`.block {
+				margin-left: -5%;
+				max-width: 105%;
+			}`,
+			mixins
+		);
+	});
+});
+
+describe('rowModify', () => {
+	it('should output override margins with override value', () => {
+		return process(
+			`.block {
+				rowModify(10);
+			}`,
+			`.block {
+				margin-left: -10%;
+				max-width: 110%;
+			}`,
+			mixins
+		);
+	});
+});
+
+describe('rowReset', () => {
+	it('should output reset', () => {
+		return process(
+			`.block {
+				rowReset();
+			}`,
+			`.block {
+				margin-left: 0;
+				max-width: none;
+			}`,
+			mixins
+		);
+	});
+});
+
+describe('column', () => {
+	it('should output default width', () => {
+		return process(
+			`.block {
+				column();
+			}`,
+			`.block {
+				float: left;
+				width: 100%;
+			}`,
+			mixins
+		);
+	});
+
+	it('should output override width', () => {
+		return process(
+			`.block {
+				column(50%);
+			}`,
+			`.block {
+				float: left;
+				width: 50%;
+			}`,
+			mixins
+		);
+	});
+
+	it('should output column share', () => {
+		return process(
+			`.block {
+				column(1);
+			}`,
+			`.block {
+				float: left;
+				width: 12.5%;
+			}`,
+			mixins
+		);
+	});
+
+	it('should output column share with grid column count', () => {
+		return process(
+			`.block {
+				column(1, 2);
+			}`,
+			`.block {
+				float: left;
+				width: 50%;
+			}`,
+			mixins
+		);
+	});
+
+	it('should output column share with grid column count with default grid margin', () => {
+		return process(
+			`.block {
+				column(spaced, 1, 2);
+			}`,
+			`.block {
+				float: left;
+				width: 50%;
+				margin-left: 5%;
+			}`,
+			mixins
+		);
+	});
+
+	it('should output column share with grid column count with override grid margin', () => {
+		return process(
+			`.block {
+				column(spaced, 1, 2, 10%);
+			}`,
+			`.block {
+				float: left;
+				width: 50%;
+				margin-left: 10%;
+			}`,
+			mixins
+		);
+	});
+});
