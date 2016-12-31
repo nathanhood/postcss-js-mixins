@@ -432,7 +432,8 @@ describe('centeredBlock', () => {
 			}`,
 			`.block {
 				display: block;
-				margin: 0 auto;
+				margin-left: auto;
+				margin-right: auto;
 			}`,
 			mixins
 		);
@@ -446,7 +447,8 @@ describe('centeredBlock', () => {
 			`.block {
 				display: block;
 				width: 20rem;
-				margin: 0 auto;
+				margin-left: auto;
+				margin-right: auto;
 			}`,
 			mixins
 		);
@@ -461,7 +463,8 @@ describe('centeredBlock', () => {
 				display: block;
 				width: 20rem;
 				height: 30rem;
-				margin: 0 auto;
+				margin-left: auto;
+				margin-right: auto;
 			}`,
 			mixins
 		);
@@ -476,7 +479,8 @@ describe('centeredBlock', () => {
 				display: block;
 				width: 20px;
 				height: 30em;
-				margin: 0 auto;
+				margin-left: auto;
+				margin-right: auto;
 			}`,
 			mixins
 		);
@@ -491,7 +495,8 @@ describe('centeredBlock', () => {
 				display: block;
 				width: 20rem;
 				height: 20rem;
-				margin: 0 auto;
+				margin-left: auto;
+				margin-right: auto;
 			}`,
 			mixins
 		);
@@ -505,7 +510,8 @@ describe('centeredBlock', () => {
 			`.block {
 				display: block;
 				height: 20rem;
-				margin: 0 auto;
+				margin-left: auto;
+				margin-right: auto;
 			}`,
 			mixins
 		);
@@ -623,29 +629,29 @@ describe('spaced', () => {
 });
 
 describe('margin', () => {
-	it('specified margin value and direction', () => {
-		return process(
-			`.block {
-				margin(20, bottom);
-			}`,
-			`.block {
-				margin-bottom: 20rem;
-			}`,
-			mixins
-		);
-	});
+	// it('specified margin value and direction', () => {
+	// 	return process(
+	// 		`.block {
+	// 			margin(20, bottom);
+	// 		}`,
+	// 		`.block {
+	// 			margin-bottom: 20rem;
+	// 		}`,
+	// 		mixins
+	// 	);
+	// });
 
-	it('should output supplied value as margin-bottom', () => {
-		return process(
-			`.block {
-				spaced(10);
-			}`,
-			`.block {
-				margin-bottom: 10rem;
-			}`,
-			mixins
-		);
-	});
+	// it('should output supplied value as margin-bottom', () => {
+	// 	return process(
+	// 		`.block {
+	// 			spaced(10);
+	// 		}`,
+	// 		`.block {
+	// 			margin-bottom: 10rem;
+	// 		}`,
+	// 		mixins
+	// 	);
+	// });
 
 	it('should output supplied string value as margin', () => {
 		return process(
@@ -1124,6 +1130,44 @@ describe('italic', () => {
 			}`,
 			`.block {
 				font-style: italic;
+			}`,
+			mixins
+		);
+	});
+});
+
+describe('background', () => {
+	it('should output transparent', () => {
+		return process(
+			`.block {
+				background(0);
+			}`,
+			`.block {
+				background: transparent;
+			}`,
+			mixins
+		);
+	});
+
+	it('should output a string', () => {
+		return process(
+			`.block {
+				background('this is a string');
+			}`,
+			`.block {
+				background: 'this is a string';
+			}`,
+			mixins
+		);
+	});
+
+	it('should output opacity as second parameter', () => {
+		return process(
+			`.block {
+				background(#fff, .4);
+			}`,
+			`.block {
+				background: 'this is a string';
 			}`,
 			mixins
 		);
