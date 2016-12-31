@@ -73,7 +73,13 @@ module.exports = postcss.plugin('postcss-js-mixins', (options = {}) => {
 				if (Array.isArray(results)) {
 					node.replaceWith(createDeclarations(results, node));
 				} else {
-					node.replaceWith(createDeclaration(results, node));
+					if (results.prop === 'rule') {
+						node.replaceWith(
+							postcss.parse(results.value)
+						);
+					} else {
+						node.replaceWith(createDeclaration(results, node));	
+					}
 				}
 			}
 		});
