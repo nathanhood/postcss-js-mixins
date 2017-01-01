@@ -6,9 +6,9 @@ module.exports = postcss.plugin('postcss-js-mixins', (options = {}) => {
 	let mixins = options.mixins || {};
 
 	function isNumber(value) {
-	    let val = parseFloat(value);
-	    
-	    return ! isNaN(val) && isFinite(val) && ! /[^\d.]/.test(value);
+		let val = parseFloat(value);
+		
+		return ! isNaN(val) && isFinite(val) && ! /[^\d.]/.test(value);
 	}
 
 	/**
@@ -58,6 +58,7 @@ module.exports = postcss.plugin('postcss-js-mixins', (options = {}) => {
 			if (decl.prop === 'rule') {
 				return postcss.parse(decl.value)
 			}
+
 			return createDeclaration(decl, node);
 		});
 	}
