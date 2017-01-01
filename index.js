@@ -5,6 +5,12 @@ const postcss = require('postcss');
 module.exports = postcss.plugin('postcss-js-mixins', (options = {}) => {
 	let mixins = options.mixins || {};
 
+	function isNumber(value) {
+	    let val = parseFloat(value);
+	    
+	    return ! isNaN(val) && isFinite(val) && ! /[^\d.]/.test(value);
+	}
+
 	/**
 	 * Evaluate mixin
 	 *
@@ -17,7 +23,9 @@ module.exports = postcss.plugin('postcss-js-mixins', (options = {}) => {
 			key = segs.shift(),
 			mixin = mixins[key],
 			args = node.arguments.map(arg => {
-				if (typeof arg === 'string') {
+				if (isNumber(arg)) {
+					return parseFloat(arg);
+				} else if (typeof arg === 'string') {
 					return arg.length ? arg : undefined;
 				}
 
