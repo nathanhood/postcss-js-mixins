@@ -61,6 +61,18 @@ describe('mixins', () => {
 		);
 	});
 
+	it('should convert numbers', () => {
+		return process(
+			`.block {
+				opacity(.4);
+			}`,
+			`.block {
+				opacity: 0.4;
+			}`,
+			mixins
+		);
+	});
+
 	it('should throw a warning if mixin does not exist', () => {
 		return process(
 			`.block {
@@ -72,11 +84,6 @@ describe('mixins', () => {
 			1
 		);
 	});
-
-	// Adds declarations in correct position in file
-	// Nesting selectors
-	// Nested mixin properties
-	// All types of input - regular CSS values (hex, px/rem/em, %, keywords), string, variable, CSS functions, integer
 });
 
 // TODO: anything below here is a part of the mixin specific test
