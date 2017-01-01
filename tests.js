@@ -1137,18 +1137,6 @@ describe('italic', () => {
 });
 
 describe('background', () => {
-	it('should output transparent', () => {
-		return process(
-			`.block {
-				background(0);
-			}`,
-			`.block {
-				background: transparent;
-			}`,
-			mixins
-		);
-	});
-
 	it('should output a string', () => {
 		return process(
 			`.block {
@@ -1167,7 +1155,7 @@ describe('background', () => {
 				background(#fff, .4);
 			}`,
 			`.block {
-				background-color: rgba(255, 255, 255, 0.4);
+				background: rgba(255, 255, 255, 0.4);
 			}`,
 			mixins
 		);
@@ -1179,7 +1167,7 @@ describe('background', () => {
 				background(#fff, 40%);
 			}`,
 			`.block {
-				background-color: rgba(255, 255, 255, 0.4);
+				background: rgba(255, 255, 255, 0.4);
 			}`,
 			mixins
 		);
