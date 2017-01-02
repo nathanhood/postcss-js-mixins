@@ -822,7 +822,7 @@ describe('font', () => {
 				font-family: Open Sans;
 				font-size: 10rem;
 				font-weight: 300;
-				line-height: 2;
+				line-height: 2em;
 				font-style: italic;
 			}`,
 			mixins
