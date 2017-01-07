@@ -3,9 +3,9 @@
 const expect = require('chai').expect;
 const postcss = require('postcss');
 const plugin = require('./index.js');
-const parser = require('./lib/parse');
-const stringify = require('./lib/stringify');
-const mixins = require('./lib/mixins/mixins');
+const parser = require('./parser/parse');
+const stringify = require('./parser/stringify');
+const mixins = require('./lib/mixins');
 
 function process(input, expected, opts = {}, warnings = 0) {
 	return postcss([ plugin(opts) ]).process(input, {
