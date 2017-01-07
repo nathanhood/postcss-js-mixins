@@ -1430,62 +1430,33 @@ describe('border', () => {
 	});
 });
 
-// TODO: fix the raws, temporarily adjusted tabbing for passing test
+// Note: Generated rules will not add semi-colon to last declaration.
+// This is supported by the CSS spec.
 describe('clearfix', () => {
 	it('should output a nested selector', () => {
 		return process(
-			`.block {
-				clearfix();
-			}`,
-			`.block {
-				&:after {
-								clear: both;
-								content: '';
-								display: block
-				}
-			}`,
+			`.block { clearfix(); }`,
+			`.block { &:after { clear: both; content: ''; display: block } }`,
 			mixins
 		);
 	});
 });
 
-// TODO: fix raws on clearfix output
 describe('row', () => {
 	it('should output margins with clearfix', () => {
 		return process(
-			`.block {
-				row();
-			}`,
-			`.block {
-				margin-left: -5%;
-				max-width: 105%;
-				&:after {
-				clear: both;
-				content: '';
-				display: block;
-			}
-			}`,
+			`.block { row(); }`,
+			`.block { margin-left: -5%; max-width: 105%; &:after { clear: both; content: ''; display: block } }`,
 			mixins
 		);
 	});
 });
 
-// TODO: fix raws on clearfix output
 describe('row', () => {
 	it('should output margins with clearfix with override value', () => {
 		return process(
-			`.block {
-				row(10%);
-			}`,
-			`.block {
-				margin-left: -10%;
-				max-width: 110%;
-				&:after {
-				clear: both;
-				content: '';
-				display: block;
-			}
-			}`,
+			`.block { row(10%); }`,
+			`.block { margin-left: -10%; max-width: 110%; &:after { clear: both; content: ''; display: block } }`,
 			mixins
 		);
 	});
