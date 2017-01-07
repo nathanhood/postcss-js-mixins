@@ -7,7 +7,7 @@ module.exports = postcss.plugin('postcss-js-mixins', (options = {}) => {
 
 	function isNumber(value) {
 		let val = parseFloat(value);
-		
+
 		return ! isNaN(val) && isFinite(val) && ! /[^\d.]/.test(value);
 	}
 
@@ -46,37 +46,62 @@ module.exports = postcss.plugin('postcss-js-mixins', (options = {}) => {
 	}
 
 	/**
-	 * Create many declarations from one mixin result
+	 * Create many declarations/rules from one mixin result
 	 *
 	 * @param {array} data
 	 * @param {object} node - postcss.Mixin
 	 */
-	function createDeclarations(data, node) {
-		return data.map(decl => {
-
-			// TODO: temporary fix
-			if (decl.prop === 'rule') {
-				return postcss.parse(decl.value)
-			}
-
-			return createDeclaration(decl, node);
+	function createNodes(data, node) {
+		return data.map(obj => {
+			return createNode(obj, node);
 		});
+	}
+
+	function createNode(obj, node) {
+		if (obj.type === 'rule') {
+			return createRule(obj.selector, obj.declarations, node);
+		}
+
+		return createDeclaration(obj.prop, obj.value, node);
 	}
 
 	/**
 	 * Create postcss declaration with meta info from mixin
 	 *
-	 * @param {object} data
+	 * @param {string} selector
+	 * @param {Array} declarations - one or many postcss.Declaration
+	 * @param {object} node - postcss.Mixin
+	 * @returns {Rule}
+	 */
+	function createRule(selector, declarations, node) {
+		let rule = postcss.rule({
+			selector: selector,
+			parent: node.parent
+		});
+
+		declarations.forEach(decl => {
+			rule.append(createDeclaration(decl.prop, decl.value, node));
+		});
+
+		return rule;
+	}
+
+	/**
+	 * Create postcss declaration with meta info from mixin
+	 *
+	 * @param {string} prop
+	 * @param {string|number} value
 	 * @param {object} node - postcss.Mixin
 	 * @returns {Declaration}
 	 */
-	function createDeclaration(data, node) {
-		return postcss.decl({
-			prop: data.prop,
-			value: data.value,
-			raws: Object.assign({}, node.raws),
+	function createDeclaration(prop, value, node) {
+		let decl = postcss.decl({
+			prop: prop,
+			value: value,
 			parent: node.parent
 		});
+
+		return decl;
 	}
 
 	return (root, result) => {
@@ -85,16 +110,9 @@ module.exports = postcss.plugin('postcss-js-mixins', (options = {}) => {
 				let results = evalMixin(node, result);
 
 				if (Array.isArray(results)) {
-					node.replaceWith(createDeclarations(results, node));
+					node.replaceWith(createNodes(results, node));
 				} else {
-					// TODO: This works, but the raws are all out of whack
-					if (results.prop === 'rule') {
-						node.replaceWith(
-							postcss.parse(results.value)
-						);
-					} else {
-						node.replaceWith(createDeclaration(results, node));	
-					}
+					node.replaceWith(createNode(results, node));
 				}
 			}
 		});

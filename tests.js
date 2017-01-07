@@ -5,7 +5,7 @@ const postcss = require('postcss');
 const plugin = require('./index.js');
 const parser = require('./lib/parse');
 const stringify = require('./lib/stringify');
-const mixins = require('./lib/mixins');
+const mixins = require('./lib/mixins/mixins');
 
 function process(input, expected, opts = {}, warnings = 0) {
 	return postcss([ plugin(opts) ]).process(input, {
