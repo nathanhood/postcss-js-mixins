@@ -76,7 +76,8 @@ module.exports = postcss.plugin('postcss-js-mixins', (options = {}) => {
 	function createRule(selector, declarations, node) {
 		let rule = postcss.rule({
 			selector: selector,
-			parent: node.parent
+			parent: node.parent,
+			source: node.source
 		});
 
 		declarations.forEach(decl => {
@@ -98,7 +99,8 @@ module.exports = postcss.plugin('postcss-js-mixins', (options = {}) => {
 		let decl = postcss.decl({
 			prop: prop,
 			value: value,
-			parent: node.parent
+			parent: node.parent,
+			source: node.source
 		});
 
 		return decl;
