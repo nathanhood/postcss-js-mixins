@@ -73,6 +73,20 @@ describe('mixins', () => {
 		);
 	});
 
+	it('should parse unmatched variables as individual parameters', () => {
+		return process(
+			`.block {
+				spacedBlock($margin, 10);
+			}`,
+			`.block {
+				margin-bottom: $margin;
+				display: block;
+				width: 10rem;
+			}`,
+			mixins
+		);
+	});
+
 	it('should throw a warning if mixin does not exist', () => {
 		return process(
 			`.block {
