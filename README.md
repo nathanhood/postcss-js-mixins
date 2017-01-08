@@ -123,7 +123,7 @@ function background(obj) {
 position(color: #f7f7f7);
 ```
 
-### `helper methods`
+### `Helper Methods`
 Helper methods have been provided in order to make writing mixin functions.
 
 ```js
