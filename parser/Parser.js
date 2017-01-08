@@ -203,6 +203,16 @@ class Parser extends BaseParser {
 					objectArgs = true;
 				}
 
+				// Concatenate font family argument together
+				if (
+					(type === 'word' || type === 'string') &&
+					(args[args.length - 1] && tokens[i - 1][0] === 'space') &&
+					! tokens[i - 2][1].includes(',')
+				) {
+					args[args.length - 1] += (', ' + token[1].replace(/,$/, ''));
+					continue;
+				}
+
 				if (type === 'word') {
 					args.push(token[1].replace(/,$/, ''));
 				}
