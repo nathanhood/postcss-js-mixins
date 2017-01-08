@@ -1,4 +1,4 @@
-# PostCSS Plugin Title
+# PostCSS JS Mixins
 
 [![Build Status](https://travis-ci.org/nathanhood/postcss-variable-media.svg?branch=master)](https://travis-ci.org/nathanhood/postcss-variable-media)
 [![codecov](https://codecov.io/gh/nathanhood/postcss-variable-media/branch/master/graph/badge.svg)](https://codecov.io/gh/nathanhood/postcss-variable-media)
