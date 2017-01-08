@@ -1,9 +1,14 @@
 'use strict';
 
 const postcss = require('postcss');
+const helpers = require('./lib/helpers');
 
 module.exports = postcss.plugin('postcss-js-mixins', (options = {}) => {
 	let mixins = options.mixins || {};
+
+	if (options.units) {
+		helpers.setDefaultUnits(options.units);
+	}
 
 	function isNumber(value) {
 		let val = parseFloat(value);

@@ -18,7 +18,7 @@ function process(input, expected, opts = {}, warnings = 0) {
 		});
 }
 
-describe('mixins', () => {
+describe('{ mixins: mixins }', () => {
 	it('should generate a single declaration', () => {
 		return process(
 			`.block {
@@ -69,7 +69,7 @@ describe('mixins', () => {
 			`.block {
 				opacity: 0.4;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -83,7 +83,7 @@ describe('mixins', () => {
 				display: block;
 				width: 10rem;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -100,6 +100,58 @@ describe('mixins', () => {
 	});
 });
 
+describe('default units', () => {
+	after(() => {
+		return process('', '', {
+			mixins: mixins,
+			units: {
+				default: 'rem',
+				lineHeight: 'em'
+			}
+		});
+	});
+
+	it('should fallback to rem and em (line-height only)', () => {
+		return process(
+			`.block {
+				font('Open Sans' Arial sans-serif, 5, bold, 1.2);
+			}`,
+			`.block {
+				font-family: 'Open Sans', Arial, sans-serif;
+				font-size: 5rem;
+				font-weight: bold;
+				line-height: 1.2em;
+			}`,
+			{ mixins: mixins }
+		);
+	});
+
+	it('should be registered in options object', () => {
+		return process(
+			`.block {
+				spacedBlock($margin, 10);
+				font(Arial, 5, bold, 1.2);
+			}`,
+			`.block {
+				margin-bottom: $margin;
+				display: block;
+				width: 10px;
+				font-family: Arial;
+				font-size: 5px;
+				font-weight: bold;
+				line-height: 1.2%;
+			}`,
+			{
+				mixins: mixins,
+				units: {
+					default: 'px',
+					lineHeight: '%'
+				}
+			}
+		);
+	});
+});
+
 // TODO: anything below here is a part of the mixin specific test
 describe('left', () => {
 	it('should generate float left by default', () => {
@@ -110,7 +162,7 @@ describe('left', () => {
 			`.block {
 				float: left;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -122,7 +174,7 @@ describe('left', () => {
 			`.block {
 				left: 10rem;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -134,7 +186,7 @@ describe('left', () => {
 			`.block {
 				left: 10px;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -148,7 +200,7 @@ describe('right', () => {
 			`.block {
 				float: right;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -160,7 +212,7 @@ describe('right', () => {
 			`.block {
 				right: 10rem;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -172,7 +224,7 @@ describe('right', () => {
 			`.block {
 				right: 10px;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -186,7 +238,7 @@ describe('clear', () => {
 			`.block {
 				clear: both;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -198,7 +250,7 @@ describe('clear', () => {
 			`.block {
 				clear: left;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -212,7 +264,7 @@ describe('align', () => {
 			`.block {
 				text-align: center;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -224,7 +276,7 @@ describe('align', () => {
 			`.block {
 				text-align: left;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -238,7 +290,7 @@ describe('vAlign', () => {
 			`.block {
 				vertical-align: middle;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -250,7 +302,7 @@ describe('vAlign', () => {
 			`.block {
 				vertical-align: 10rem;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -262,7 +314,7 @@ describe('vAlign', () => {
 			`.block {
 				vertical-align: 10px;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -276,7 +328,7 @@ describe('inline', () => {
 			`.block {
 				display: inline;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -290,7 +342,7 @@ describe('inlineBlock', () => {
 			`.block {
 				display: inline-block;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -303,7 +355,7 @@ describe('inlineBlock', () => {
 				display: inline-block;
 				width: 20rem;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -317,7 +369,7 @@ describe('inlineBlock', () => {
 				width: 20rem;
 				height: 30rem;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -331,7 +383,7 @@ describe('inlineBlock', () => {
 				width: 20px;
 				height: 30em;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -345,7 +397,7 @@ describe('inlineBlock', () => {
 				width: 20rem;
 				height: 20rem;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -358,7 +410,7 @@ describe('inlineBlock', () => {
 				display: inline-block;
 				height: 20rem;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -372,7 +424,7 @@ describe('block', () => {
 			`.block {
 				display: block;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -385,7 +437,7 @@ describe('block', () => {
 				display: block;
 				width: 20rem;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -399,7 +451,7 @@ describe('block', () => {
 				width: 20rem;
 				height: 30rem;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -413,7 +465,7 @@ describe('block', () => {
 				width: 20px;
 				height: 30em;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -427,7 +479,7 @@ describe('block', () => {
 				width: 20rem;
 				height: 20rem;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -440,7 +492,7 @@ describe('block', () => {
 				display: block;
 				height: 20rem;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -456,7 +508,7 @@ describe('centeredBlock', () => {
 				margin-left: auto;
 				margin-right: auto;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -471,7 +523,7 @@ describe('centeredBlock', () => {
 				margin-left: auto;
 				margin-right: auto;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -487,7 +539,7 @@ describe('centeredBlock', () => {
 				margin-left: auto;
 				margin-right: auto;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -503,7 +555,7 @@ describe('centeredBlock', () => {
 				margin-left: auto;
 				margin-right: auto;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -519,7 +571,7 @@ describe('centeredBlock', () => {
 				margin-left: auto;
 				margin-right: auto;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -534,7 +586,7 @@ describe('centeredBlock', () => {
 				margin-left: auto;
 				margin-right: auto;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -548,7 +600,7 @@ describe('display', () => {
 			`.block {
 				display: block;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -562,7 +614,7 @@ describe('hide', () => {
 			`.block {
 				display: none;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -576,7 +628,7 @@ describe('show', () => {
 			`.block {
 				display: inherit;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -590,7 +642,7 @@ describe('visibility', () => {
 			`.block {
 				visibility: hidden;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -604,7 +656,7 @@ describe('visible', () => {
 			`.block {
 				visibility: visible;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -618,7 +670,7 @@ describe('hidden', () => {
 			`.block {
 				visibility: hidden;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -632,7 +684,7 @@ describe('spaced', () => {
 			`.block {
 				margin-bottom: 2rem;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -644,7 +696,7 @@ describe('spaced', () => {
 			`.block {
 				margin-bottom: 10rem;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -658,7 +710,7 @@ describe('margin', () => {
 	// 		`.block {
 	// 			margin-bottom: 20rem;
 	// 		}`,
-	// 		mixins
+	// 		{ mixins: mixins }
 	// 	);
 	// });
 
@@ -670,7 +722,7 @@ describe('margin', () => {
 	// 		`.block {
 	// 			margin-bottom: 10rem;
 	// 		}`,
-	// 		mixins
+	// 		{ mixins: mixins }
 	// 	);
 	// });
 
@@ -682,7 +734,7 @@ describe('margin', () => {
 			`.block {
 				margin: 0 auto;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -697,7 +749,7 @@ describe('spacedBlock', () => {
 				margin-bottom: 2rem;
 				display: block;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -710,7 +762,7 @@ describe('spacedBlock', () => {
 				margin-bottom: 10rem;
 				display: block;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -724,7 +776,7 @@ describe('spacedBlock', () => {
 				display: block;
 				width: 10rem;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -739,7 +791,7 @@ describe('spacedBlock', () => {
 				width: 10rem;
 				height: 20rem;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -753,7 +805,7 @@ describe('spacedBlock', () => {
 				display: block;
 				width: 10em;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -767,7 +819,7 @@ describe('spacedBlock', () => {
 				width: 10rem;
 				display: block;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -781,7 +833,7 @@ describe('spacedBlock', () => {
 				width: 10px;
 				display: block;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -795,7 +847,7 @@ describe('opaque', () => {
 			`.block {
 				opacity: 1;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -809,7 +861,7 @@ describe('transparent', () => {
 			`.block {
 				opacity: 0;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -823,7 +875,7 @@ describe('font', () => {
 			`.block {
 				font-family: 'Open Sans, Arial, Helvetica, Banana';
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -839,7 +891,7 @@ describe('font', () => {
 				line-height: 2em;
 				font-style: italic;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -852,7 +904,7 @@ describe('font', () => {
 				font-style: italic;
 				font-weight: 300;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -866,7 +918,7 @@ describe('unstyled', () => {
 			`.block {
 				list-style: none;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -880,7 +932,7 @@ describe('absolute', () => {
 			`.block {
 				position: absolute;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -894,7 +946,7 @@ describe('absolute', () => {
 				top: 4rem;
 				right: 3rem;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -910,7 +962,7 @@ describe('absolute', () => {
 				left: 2rem;
 				bottom: 1rem;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -926,7 +978,7 @@ describe('absolute', () => {
 				left: 2pt;
 				bottom: 1mm;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -940,7 +992,7 @@ describe('absolute', () => {
 				bottom: 3rem;
 				top: 4rem;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -954,7 +1006,7 @@ describe('absolute', () => {
 				bottom: 3px;
 				top: 4in;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -968,7 +1020,7 @@ describe('fixed', () => {
 			`.block {
 				position: fixed;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -982,7 +1034,7 @@ describe('fixed', () => {
 				top: 4rem;
 				right: 3rem;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -998,7 +1050,7 @@ describe('fixed', () => {
 				left: 2rem;
 				bottom: 1rem;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1014,7 +1066,7 @@ describe('fixed', () => {
 				left: 2pt;
 				bottom: 1mm;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1028,7 +1080,7 @@ describe('fixed', () => {
 				bottom: 3rem;
 				top: 4rem;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1042,7 +1094,7 @@ describe('fixed', () => {
 				bottom: 3px;
 				top: 4in;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -1057,7 +1109,7 @@ describe('size', () => {
 				width: 100rem;
 				height: 100rem;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1070,7 +1122,7 @@ describe('size', () => {
 				width: 100%;
 				height: 100%;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1083,7 +1135,7 @@ describe('size', () => {
 				width: 100%;
 				height: 20%;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -1098,7 +1150,7 @@ describe('minSize', () => {
 				min-width: 100rem;
 				min-height: 100rem;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1111,7 +1163,7 @@ describe('minSize', () => {
 				min-width: 100%;
 				min-height: 100%;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1124,7 +1176,7 @@ describe('minSize', () => {
 				min-width: 100%;
 				min-height: 20%;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -1138,7 +1190,7 @@ describe('bold', () => {
 			`.block {
 				font-weight: 600;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -1152,7 +1204,7 @@ describe('italic', () => {
 			`.block {
 				font-style: italic;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -1166,7 +1218,7 @@ describe('background', () => {
 			`.block {
 				background: 'this is a string';
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1178,7 +1230,7 @@ describe('background', () => {
 			`.block {
 				background: rgba(255, 255, 255, 0.4);
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1190,7 +1242,7 @@ describe('background', () => {
 			`.block {
 				background: rgba(255, 255, 255, 0.4);
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1202,7 +1254,7 @@ describe('background', () => {
 			`.block {
 				background: #fff url('/test/test.jpg');
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1214,7 +1266,7 @@ describe('background', () => {
 			`.block {
 				background: #fff url('/test/test.jpg') center;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1226,7 +1278,7 @@ describe('background', () => {
 			`.block {
 				background: #fff url('/test/test.jpg') center center;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1238,7 +1290,7 @@ describe('background', () => {
 			`.block {
 				background: #fff url('/test/test.jpg') center center no-repeat;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1250,7 +1302,7 @@ describe('background', () => {
 			`.block {
 				background: #fff url('/test/test.jpg') center center no-repeat fixed;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -1264,7 +1316,7 @@ describe('border', () => {
 			`.block {
 				border: 1px solid #bfbfbf;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1278,7 +1330,7 @@ describe('border', () => {
 				border: none;
 				border: none;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1290,7 +1342,7 @@ describe('border', () => {
 			`.block {
 				border: 1px solid #000;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1302,7 +1354,7 @@ describe('border', () => {
 			`.block {
 				border: 1px solid black;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1314,7 +1366,7 @@ describe('border', () => {
 			`.block {
 				border-top: 1px solid #bfbfbf;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1326,7 +1378,7 @@ describe('border', () => {
 			`.block {
 				border-left: 1px solid #bfbfbf;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1339,7 +1391,7 @@ describe('border', () => {
 				border-left: 1px solid #bfbfbf;
 				border-right: 1px solid #bfbfbf;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1352,7 +1404,7 @@ describe('border', () => {
 				border-top: 1px solid #bfbfbf;
 				border-bottom: 1px solid #bfbfbf;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1364,7 +1416,7 @@ describe('border', () => {
 			`.block {
 				border-left: 1px solid #000;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1376,7 +1428,7 @@ describe('border', () => {
 			`.block {
 				border-top: 1px solid #000;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1389,7 +1441,7 @@ describe('border', () => {
 				border-left: 1px solid #000;
 				border-right: 1px solid #000;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1401,7 +1453,7 @@ describe('border', () => {
 			`.block {
 				border-top: 1px solid black;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1413,7 +1465,7 @@ describe('border', () => {
 			`.block {
 				border-left: 1px solid black;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1426,7 +1478,7 @@ describe('border', () => {
 				border-left: 1px solid black;
 				border-right: 1px solid black;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1439,7 +1491,7 @@ describe('border', () => {
 				border-top: 1px solid black;
 				border-bottom: 1px solid black;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -1451,7 +1503,7 @@ describe('clearfix', () => {
 		return process(
 			`.block { clearfix(); }`,
 			`.block { &:after { clear: both; content: ''; display: block } }`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -1461,7 +1513,7 @@ describe('row', () => {
 		return process(
 			`.block { row(); }`,
 			`.block { margin-left: -5%; max-width: 105%; &:after { clear: both; content: ''; display: block } }`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -1471,7 +1523,7 @@ describe('row', () => {
 		return process(
 			`.block { row(10%); }`,
 			`.block { margin-left: -10%; max-width: 110%; &:after { clear: both; content: ''; display: block } }`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -1486,7 +1538,7 @@ describe('rowModify', () => {
 				margin-left: -5%;
 				max-width: 105%;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -1501,7 +1553,7 @@ describe('rowModify', () => {
 				margin-left: -10%;
 				max-width: 110%;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -1516,7 +1568,7 @@ describe('rowReset', () => {
 				margin-left: 0;
 				max-width: none;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });
@@ -1531,7 +1583,7 @@ describe('column', () => {
 				float: left;
 				width: 100%;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1544,7 +1596,7 @@ describe('column', () => {
 				float: left;
 				width: 50%;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1557,7 +1609,7 @@ describe('column', () => {
 				float: left;
 				width: 12.5%;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1570,7 +1622,7 @@ describe('column', () => {
 				float: left;
 				width: 50%;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1584,7 +1636,7 @@ describe('column', () => {
 				width: 50%;
 				margin-left: 5%;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 
@@ -1598,7 +1650,7 @@ describe('column', () => {
 				width: 50%;
 				margin-left: 10%;
 			}`,
-			mixins
+			{ mixins: mixins }
 		);
 	});
 });

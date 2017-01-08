@@ -78,7 +78,12 @@ require('postcss-js-mixins')({
 });
 ```
 
-### `defaults`
+### `units`
+
+Type: `Object`  
+Default: `{ default: 'rem', lineHeight: 'em' }`
+
+These units will be appended intelligently when number values are passed without a unit. For example, the `font-size` property will have the unit appended, but opacity will not.
 
 ## Writing Mixins
 
