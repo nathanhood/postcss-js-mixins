@@ -101,6 +101,20 @@ const Decl = require('postcss-js-mixins/lib/Declaration');
 new Decl(prop, value);
 ```
 
+### Rule
+
+Rules take a selector and an array of `Declaration` objects.
+
+```js
+const Rule = require('postcss-js-mixins/lib/Rule');
+
+// Create single declaration
+new Rule('.block:after', [
+	new Decl(prop, value),
+	new Decl(prop, value)
+]);
+```
+
 #### Methods
 
 #### `createMany`
@@ -116,7 +130,7 @@ function position(...args) {
 position(10%, 0, false, 0);
 ```
 
-#### `createManyFrom`
+#### `createManyFromObj`
 When passing arguments as `object: key` pairs, the first argument in the executed mixin will be an object with all arguments aggregated together. This allows for the user to pass in arguments in arbitrary order. This function can also take a prefix as the second argument that will be prepended to all declaration properties.
 ```js
 // Create multiple declarations from an object
@@ -135,3 +149,20 @@ Helper methods have been provided in order to make writing mixin functions.
 const helpers = require('postcss-js-mixins/lib/helpers');
 const { darken, lighten } = require('postcss-js-mixins/lib/colorHelpers');
 ```
+
+#### List of Helper Methods
+
+- calcOpacity
+- hexToRgba
+- isColor
+- isEmpty
+- isNumber
+- isObject
+- isPercentage
+- isString
+- isUnit
+- prefix
+- setDefaultUnits
+- toDashCase
+- type
+- unit
