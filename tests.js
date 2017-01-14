@@ -169,6 +169,7 @@ describe('mixins', () => {
 				customMixin(#fff);
 			}`,
 			`.block {
+				customMixin(#fff);
 			}`,
 			{},
 			1

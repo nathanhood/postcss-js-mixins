@@ -117,6 +117,10 @@ module.exports = postcss.plugin('postcss-js-mixins', (options = {}) => {
 				let results = evalMixin(node, result);
 
 				if (Array.isArray(results)) {
+					if (! results.length) {
+						return;
+					}
+
 					node.replaceWith(createNodes(results, node));
 				} else {
 					node.replaceWith(createNode(results, node));
