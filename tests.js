@@ -169,12 +169,16 @@ describe('mixins', () => {
 				mixin(prop: 1, other: bold);
 			}`,
 			`.block {
-				test: bold;
+				font-weight: bold;
+				padding: 1rem;
 			}`,
 			{
 				mixins: {
 					mixin(obj) {
-						return new Decl('test', obj.other);
+						return [
+							new Decl('font-weight', obj.other),
+							new Decl('padding', obj.prop)
+						];
 					}
 				}
 			}
