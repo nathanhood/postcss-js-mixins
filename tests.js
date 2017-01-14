@@ -163,6 +163,24 @@ describe('mixins', () => {
 		);
 	});
 
+	it('should handle key: value pairs as arguments', () => {
+		return process(
+			`.block {
+				mixin(prop: 1, other: bold);
+			}`,
+			`.block {
+				test: bold;
+			}`,
+			{
+				mixins: {
+					mixin(obj) {
+						return new Decl('test', obj.other);
+					}
+				}
+			}
+		);
+	});
+
 	it('should throw a warning if mixin does not exist', () => {
 		return process(
 			`.block {
