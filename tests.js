@@ -348,3 +348,19 @@ describe('helpers: isEmpty', () => {
 		expect(helpers.isEmpty()).to.equal(true);
 	});
 });
+
+describe('helpers: isNumber', () => {
+	it('should identify string numbers and numbers as a number', () => {
+		expect(helpers.isNumber('2')).to.equal(true);
+		expect(helpers.isNumber(2)).to.equal(true);
+		expect(helpers.isNumber(2.1)).to.equal(true);
+	});
+
+	it('should not identify any other types', () => {
+		expect(helpers.isNumber('string')).to.equal(false);
+		expect(helpers.isNumber(undefined)).to.equal(false);
+		expect(helpers.isNumber(null)).to.equal(false);
+		expect(helpers.isNumber([])).to.equal(false);
+		expect(helpers.isNumber({})).to.equal(false);
+	});
+});
