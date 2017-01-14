@@ -223,10 +223,10 @@ describe('declarations', () => {
 	it('should create many declaration instances by mapping two arrays together', () => {
 		return process(
 			`.block {
-				margin(1, 2, 3, 4);
+				margin(10px, 2, 3, 4);
 			}`,
 			`.block {
-				margin-top: 1rem;
+				margin-top: 10px;
 				margin-right: 2rem;
 				margin-left: 3rem;
 				margin-bottom: 4rem;
