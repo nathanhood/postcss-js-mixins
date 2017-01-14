@@ -218,3 +218,31 @@ describe('default units', () => {
 		);
 	});
 });
+
+describe('declarations', () => {
+	it('should create many declaration instances by mapping two arrays together', () => {
+		return process(
+			`.block {
+				margin(1, 2, 3, 4);
+			}`,
+			`.block {
+				margin-top: 1rem;
+				margin-right: 2rem;
+				margin-left: 3rem;
+				margin-bottom: 4rem;
+			}`,
+			{
+				mixins: {
+					margin(...args) {
+						return Decl.createMany([
+							'margin-top',
+							'margin-right',
+							'margin-left',
+							'margin-bottom'
+						], args);
+					}
+				}
+			}
+		);
+	});
+});
