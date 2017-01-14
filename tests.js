@@ -442,3 +442,13 @@ describe('helpers: type', () => {
 		expect(helpers.type(null)).to.equal('null');
 	});
 });
+
+describe('helpers: unit', () => {
+	it('should return input value with default unit', () => {
+		expect(helpers.unit('10', 'padding')).to.equal('10rem');
+	});
+
+	it('should not modify input value if in ignored list of properties', () => {
+		expect(helpers.unit('bold', 'font-weight')).to.equal('bold');
+	});
+});
