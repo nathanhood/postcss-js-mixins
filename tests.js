@@ -360,7 +360,19 @@ describe('helpers: isNumber', () => {
 		expect(helpers.isNumber('string')).to.equal(false);
 		expect(helpers.isNumber(undefined)).to.equal(false);
 		expect(helpers.isNumber(null)).to.equal(false);
+		expect(helpers.isNumber(true)).to.equal(false);
 		expect(helpers.isNumber([])).to.equal(false);
 		expect(helpers.isNumber({})).to.equal(false);
+	});
+});
+
+describe('helpers: isObject', () => {
+	it('should identify only {} as an object', () => {
+		expect(helpers.isObject({})).to.equal(true);
+		expect(helpers.isObject('string')).to.equal(false);
+		expect(helpers.isObject(undefined)).to.equal(false);
+		expect(helpers.isObject(null)).to.equal(false);
+		expect(helpers.isObject(true)).to.equal(false);
+		expect(helpers.isObject([])).to.equal(false);
 	});
 });
