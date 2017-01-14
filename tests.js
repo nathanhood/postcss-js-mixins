@@ -430,3 +430,15 @@ describe('helpers: toDashCase', () => {
 		expect(helpers.toDashCase('toDashCase')).to.equal('to-dash-case');
 	});
 });
+
+describe('helpers: type', () => {
+	it('should return the text value of type', () => {
+		expect(helpers.type('string')).to.equal('string');
+		expect(helpers.type([])).to.equal('array');
+		expect(helpers.type({})).to.equal('object');
+		expect(helpers.type(1)).to.equal('number');
+		expect(helpers.type(true)).to.equal('boolean');
+		expect(helpers.type(undefined)).to.equal('undefined');
+		expect(helpers.type(null)).to.equal('null');
+	});
+});
