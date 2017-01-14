@@ -376,3 +376,9 @@ describe('helpers: isObject', () => {
 		expect(helpers.isObject([])).to.equal(false);
 	});
 });
+
+describe('helpers: isPercentage', () => {
+	it('should identify string number with %', () => {
+		expect(helpers.isPercentage('20%')).to.equal(true);
+	});
+});
