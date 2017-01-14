@@ -303,3 +303,17 @@ describe('helpers: calcOpacity', () => {
 		return expect(helpers.calcOpacity(0.2)).to.equal(0.2);
 	});
 });
+
+describe('helpers: hexToRgba', () => {
+	it('should convert a hex value to RGB', () => {
+		return expect(helpers.hexToRgba('#f5830f')).to.equal('rgb(245, 131, 15)');
+	});
+
+	it('should convert a hex value with opacity into RGBA', () => {
+		return expect(helpers.hexToRgba('#f5830f', 0.2)).to.equal('rgba(245, 131, 15, 0.2)');
+	});
+
+	it('should convert three character hex value into proper rgb', () => {
+		return expect(helpers.hexToRgba('#fff')).to.equal('rgb(255, 255, 255)');
+	});
+});
