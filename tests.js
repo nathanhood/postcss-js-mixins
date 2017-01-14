@@ -338,3 +338,13 @@ describe('helpers: isColor', () => {
 		expect(helpers.isColor('something')).to.equal(false);
 	});
 });
+
+describe('helpers: isEmpty', () => {
+	it('should identify empty array as empty', () => {
+		expect(helpers.isEmpty([])).to.equal(true);
+	});
+
+	it('should identify undefined as empty', () => {
+		expect(helpers.isEmpty()).to.equal(true);
+	});
+});
