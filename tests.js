@@ -410,3 +410,17 @@ describe('helpers: isUnit', () => {
 		expect(helpers.isUnit(10)).to.equal(false);
 	});
 });
+
+describe('helpers: prefix', () => {
+	it('should return raw input if no prefix is false', () => {
+		expect(helpers.prefix('margin', false)).to.equal('margin');
+	});
+
+	it('should return prefix appended to standard value', () => {
+		expect(helpers.prefix('family', 'font')).to.equal('font-family');
+	});
+
+	it('should return dash case version of input if prefix is supposed to be ignored', () => {
+		expect(helpers.prefix('family', 'font', ['font'])).to.equal('family');
+	});
+});
