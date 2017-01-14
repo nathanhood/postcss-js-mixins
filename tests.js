@@ -21,17 +21,9 @@ const mixins = {
 
 		props.push(new Decl('width', args[0]));
 
-		if (args[1]) {
-			props.push(new Decl('height', args[1]));
-		}
-
 		return props;
 	},
 	spaced(value) {
-		if (helpers.isEmpty(value) || helpers.isObject(value)) {
-			value = 2;
-		}
-
 		return this.margin({ bottom: value });
 	},
 	margin(...args) {
@@ -54,10 +46,6 @@ const mixins = {
 
 		if (args[3]) {
 			props.push(new Decl('line-height', args[3]));
-		}
-
-		if (args[4]) {
-			props.push(new Decl('font-style', args[4]));
 		}
 
 		return props;
