@@ -382,3 +382,31 @@ describe('helpers: isPercentage', () => {
 		expect(helpers.isPercentage('20%')).to.equal(true);
 	});
 });
+
+describe('helpers: isString', () => {
+	it('should identify string', () => {
+		expect(helpers.isString('string')).to.equal(true);
+		expect(helpers.isString({})).to.equal(false);
+		expect(helpers.isString(undefined)).to.equal(false);
+		expect(helpers.isString(null)).to.equal(false);
+		expect(helpers.isString(true)).to.equal(false);
+		expect(helpers.isString([])).to.equal(false);
+	});
+});
+
+describe('helpers: isUnit', () => {
+	it('should identify a CSS unit', () => {
+		expect(helpers.isUnit('10px')).to.equal(true);
+		expect(helpers.isUnit('10rem')).to.equal(true);
+		expect(helpers.isUnit('10em')).to.equal(true);
+		expect(helpers.isUnit('10%')).to.equal(true);
+		expect(helpers.isUnit('10vh')).to.equal(true);
+		expect(helpers.isUnit('10vw')).to.equal(true);
+		expect(helpers.isUnit('10vmin')).to.equal(true);
+	});
+
+	it('should not identify numeric values without unit', () => {
+		expect(helpers.isUnit('10')).to.equal(false);
+		expect(helpers.isUnit(10)).to.equal(false);
+	});
+});
