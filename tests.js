@@ -268,6 +268,16 @@ describe('declarations', () => {
 	});
 });
 
-describe('helpers', () => {
+describe('helpers: calcOpacity', () => {
+	it('should convert percentage argument into proper format', () => {
+		return expect(helpers.calcOpacity('20%')).to.equal(0.2);
+	});
 
+	it('should convert numerical value over 1 into proper format', () => {
+		return expect(helpers.calcOpacity(20)).to.equal(0.2);
+	});
+
+	it('should return the raw value if not percentage or greater than 1', () => {
+		return expect(helpers.calcOpacity(0.2)).to.equal(0.2);
+	});
 });
