@@ -317,3 +317,24 @@ describe('helpers: hexToRgba', () => {
 		return expect(helpers.hexToRgba('#fff')).to.equal('rgb(255, 255, 255)');
 	});
 });
+
+describe('helpers: isColor', () => {
+	it('should identify hex values as color', () => {
+		expect(helpers.isColor('#fff')).to.equal(true);
+		expect(helpers.isColor('#f7f7f7')).to.equal(true);
+	});
+
+	it('should identify rgb/rgba values as color', () => {
+		expect(helpers.isColor('rgb(0, 0, 0)')).to.equal(true);
+		expect(helpers.isColor('rgba(0, 0, 0, 0.5)')).to.equal(true);
+	});
+
+	it('should identify hsl/hsla values as color', () => {
+		expect(helpers.isColor('hsl(0, 100%, 50%)')).to.equal(true);
+		expect(helpers.isColor('hsla(0, 100%, 50%, 1)')).to.equal(true);
+	});
+
+	it('should identify non-color strings as false', () => {
+		expect(helpers.isColor('something')).to.equal(false);
+	});
+});
