@@ -245,4 +245,29 @@ describe('declarations', () => {
 			}
 		);
 	});
+
+	it('should create many declaration instances from an object', () => {
+		return process(
+			`.block {
+				margin(top: 10px, bottom: 4, right: 2, left: 3);
+			}`,
+			`.block {
+				margin-top: 10px;
+				margin-bottom: 4rem;
+				margin-right: 2rem;
+				margin-left: 3rem;
+			}`,
+			{
+				mixins: {
+					margin(obj) {
+						return Decl.createManyFromObj(obj, 'margin');
+					}
+				}
+			}
+		);
+	});
+});
+
+describe('helpers', () => {
+
 });
