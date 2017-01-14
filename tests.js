@@ -424,3 +424,9 @@ describe('helpers: prefix', () => {
 		expect(helpers.prefix('family', 'font', ['font'])).to.equal('family');
 	});
 });
+
+describe('helpers: toDashCase', () => {
+	it('should return camelCase input to dash case', () => {
+		expect(helpers.toDashCase('toDashCase')).to.equal('to-dash-case');
+	});
+});
