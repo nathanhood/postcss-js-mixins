@@ -6,6 +6,7 @@ const plugin = require('./index.js');
 const parser = require('./parser/parse');
 const stringify = require('./parser/stringify');
 const Decl = require('./lib/Declaration');
+const Rule = require('./lib/Rule');
 const helpers = require('./lib/helpers');
 const mixins = {
 	spacedBlock(...args) {
@@ -63,6 +64,8 @@ function process(input, expected, opts = {}, warnings = 0) {
 		});
 }
 
+
+// Tests
 describe('mixins', () => {
 	it('should generate a single declaration', () => {
 		return process(
@@ -136,6 +139,26 @@ describe('mixins', () => {
 			}`,
 			{
 				mixins: mixins
+			}
+		);
+	});
+
+	it('should parse nested mixin property object with dot notation', () => {
+		return process(
+			`.block {
+				test.mixin();
+			}`,
+			`.block {
+				color: #fff;
+			}`,
+			{
+				mixins: {
+					test: {
+						mixin() {
+							return new Decl('color', '#fff');
+						}
+					}
+				}
 			}
 		);
 	});
@@ -271,6 +294,22 @@ describe('declarations', () => {
 				mixins: {
 					margin(obj) {
 						return Decl.createManyFromObj(obj, 'margin');
+					}
+				}
+			}
+		);
+	});
+});
+
+describe('rules', () => {
+	it('should generate rule block', () => {
+		return process(
+			`.block { ruleMixin(); }`,
+			`.block { &:after { color: #fff } }`,
+			{
+				mixins: {
+					ruleMixin() {
+						return new Rule('&:after', [ new Decl('color', '#fff') ]);
 					}
 				}
 			}
