@@ -223,10 +223,10 @@ describe('declarations', () => {
 	it('should create many declaration instances by mapping two arrays together', () => {
 		return process(
 			`.block {
-				margin(10px, 2, 3, 4);
+				margin(1, 2, 3, 4);
 			}`,
 			`.block {
-				margin-top: 10px;
+				margin-top: 1rem;
 				margin-right: 2rem;
 				margin-left: 3rem;
 				margin-bottom: 4rem;
@@ -246,13 +246,35 @@ describe('declarations', () => {
 		);
 	});
 
+	it('should create many by reusing the same value', () => {
+		return process(
+			`.block {
+				verticalPadding(2);
+			}`,
+			`.block {
+				padding-top: 2rem;
+				padding-bottom: 2rem;
+			}`,
+			{
+				mixins: {
+					verticalPadding(value) {
+						return Decl.createMany([
+							'padding-top',
+							'padding-bottom'
+						], helpers.unit(value));
+					}
+				}
+			}
+		);
+	});
+
 	it('should create many declaration instances from an object', () => {
 		return process(
 			`.block {
-				margin(top: 10px, bottom: 4, right: 2, left: 3);
+				margin(top: 1, bottom: 4, right: 2, left: 3);
 			}`,
 			`.block {
-				margin-top: 10px;
+				margin-top: 1rem;
 				margin-bottom: 4rem;
 				margin-right: 2rem;
 				margin-left: 3rem;
