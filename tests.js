@@ -166,21 +166,45 @@ describe('mixins', () => {
 	it('should handle key: value pairs as arguments', () => {
 		return process(
 			`.block {
-				mixin(prop: 1, other: bold);
+				mixin(padding: 1, weight: bold, background: url('test.png'));
 			}`,
 			`.block {
 				font-weight: bold;
 				padding: 1rem;
+				background-image: url('test.png');
 			}`,
 			{
 				mixins: {
 					mixin(obj) {
 						return [
-							new Decl('font-weight', obj.other),
-							new Decl('padding', obj.prop)
+							new Decl('font-weight', obj.weight),
+							new Decl('padding', obj.padding),
+							new Decl('background-image', obj.background)
 						];
 					}
 				}
+			}
+		);
+	});
+
+	it('should handle font-family argument', () => {
+		return process(
+			`.block {
+				font('Open Sans' Arial sans-serif, 5, bold, 1.2);
+				fontObj(font: 'Open Sans' Arial serif);
+			}`,
+			`.block {
+				font-family: 'Open Sans', Arial, sans-serif;
+				font-size: 5rem;
+				font-weight: bold;
+				line-height: 1.2em;
+				font-family: 'Open Sans', Arial, serif;
+			}`,
+			{ mixins: Object.assign(mixins, {
+					fontObj(obj) {
+						return new Decl('font-family', obj.font);
+					}
+				})
 			}
 		);
 	});
