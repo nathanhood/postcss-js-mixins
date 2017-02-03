@@ -38,9 +38,11 @@
 ## Usage
 
 ```js
-postcss([ require('postcss-js-mixins')({ /* options */ }) ]).process(input, {
-			parser: require('postcss-js-mixins/parser/parse'),
-			stringifier: require('postcss-js-mixins/parser/stringify')
+const syntax = require('postcss-wee-syntax');
+const mixins = require('postcss-js-mixins');
+
+postcss([ mixins({ /* options */ }) ]).process(input, {
+			syntax: syntax
 		})
 		.then(result => {
 			// Do something with result

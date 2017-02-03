@@ -3,8 +3,7 @@
 const expect = require('chai').expect;
 const postcss = require('postcss');
 const plugin = require('./index.js');
-const parser = require('./parser/parse');
-const stringify = require('./parser/stringify');
+const syntax = require('postcss-wee-syntax');
 const Decl = require('./lib/Declaration');
 const Rule = require('./lib/Rule');
 const helpers = require('./lib/helpers');
@@ -55,8 +54,7 @@ const mixins = {
 
 function process(input, expected, opts = {}, warnings = 0) {
 	return postcss([ plugin(opts) ]).process(input, {
-			parser: parser,
-			stringifier: stringify
+			syntax: syntax
 		})
 		.then(result => {
 			expect(result.css).to.equal(expected);
