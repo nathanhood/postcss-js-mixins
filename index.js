@@ -122,7 +122,7 @@ module.exports = postcss.plugin('postcss-js-mixins', (options = {}) => {
 					}
 
 					node.replaceWith(createNodes(results, node));
-				} else {
+				} else if (results !== false) {
 					node.replaceWith(createNode(results, node));
 				}
 			}
