@@ -116,15 +116,21 @@ module.exports = postcss.plugin('postcss-js-mixins', (options = {}) => {
 			if (node.type === 'mixin') {
 				let results = evalMixin(node, result);
 
+				// Remove mixin from CSS
+				// Accounting for conditional mixin logic
+				if (results === false) {
+					return node.remove();
+				}
+
 				if (Array.isArray(results)) {
 					if (! results.length) {
 						return;
 					}
 
 					node.replaceWith(createNodes(results, node));
-				} else if (results !== false) {
-					node.replaceWith(createNode(results, node));
 				}
+
+				node.replaceWith(createNode(results, node));
 			}
 		});
 	};
