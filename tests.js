@@ -7,6 +7,7 @@ const syntax = require('postcss-wee-syntax');
 const Decl = require('./lib/Declaration');
 const Rule = require('./lib/Rule');
 const helpers = require('./lib/helpers');
+const colorHelpers = require('./lib/colorHelpers');
 const mixins = {
 	spacedBlock(...args) {
 		let props = this.spaced(...args);
@@ -522,5 +523,17 @@ describe('helpers: unit', () => {
 
 	it('should not modify input value if in ignored list of properties', () => {
 		expect(helpers.unit('bold', 'font-weight')).to.equal('bold');
+	});
+});
+
+describe('colorHelpers: darken', () => {
+	it('should darken hex input with percentage provided', () => {
+		expect(colorHelpers.darken('#69c', 25)).to.equal('#2d5986');
+	});
+});
+
+describe('colorHelpers: lighten', () => {
+	it('should lighten hex input with percentage provided', () => {
+		expect(colorHelpers.lighten('#6699cc', 25)).to.equal('#c6d9ec');
 	});
 });
