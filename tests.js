@@ -189,8 +189,8 @@ describe('mixins', () => {
 	it('should handle font-family argument', () => {
 		return process(
 			`.block {
-				font('Open Sans' Arial sans-serif, 5, bold, 1.2);
-				fontObj(font: 'Open Sans' Arial serif);
+				font(['Open Sans', Arial, sans-serif], 5, bold, 1.2);
+				fontObj(font: ['Open Sans', Arial, serif]);
 			}`,
 			`.block {
 				font-family: 'Open Sans', Arial, sans-serif;
@@ -236,7 +236,7 @@ describe('default units', () => {
 	it('should fallback to rem and em (line-height only)', () => {
 		return process(
 			`.block {
-				font('Open Sans' Arial sans-serif, 5, bold, 1.2);
+				font(['Open Sans', Arial, sans-serif], 5, bold, 1.2);
 			}`,
 			`.block {
 				font-family: 'Open Sans', Arial, sans-serif;
