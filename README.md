@@ -168,3 +168,5 @@ const { darken, lighten } = require('postcss-js-mixins/lib/colorHelpers');
 - toDashCase
 - type
 - unit
+
+**Note:** This plugin uses [TinyColor](https://github.com/bgrins/TinyColor) which has a large number of other color helper methods.
