@@ -4,8 +4,8 @@ const expect = require('chai').expect;
 const postcss = require('postcss');
 const plugin = require('./index.js');
 const syntax = require('postcss-wee-syntax');
-const Decl = require('./lib/Declaration');
-const Rule = require('./lib/Rule');
+const decl = require('./lib/declaration');
+const rule = require('./lib/rule');
 const helpers = require('./lib/helpers');
 const colorHelpers = require('./lib/colorHelpers');
 const mixins = {
@@ -17,10 +17,10 @@ const mixins = {
 	},
 	block(...args) {
 		let props = [
-			new Decl('display', 'block')
+			decl('display', 'block')
 		];
 
-		props.push(new Decl('width', args[0]));
+		props.push(decl('width', args[0]));
 
 		return props;
 	},
@@ -30,23 +30,23 @@ const mixins = {
 	margin(...args) {
 		let props = [];
 
-		return props.concat(Decl.createManyFromObj(args[0], 'margin'));
+		return props.concat(decl.createManyFromObj(args[0], 'margin'));
 	},
 	font(...args) {
 		var props = [];
 
-		props.push(new Decl('font-family', args[0]));
+		props.push(decl('font-family', args[0]));
 
 		if (args[1]) {
-			props.push(new Decl('font-size', args[1]));
+			props.push(decl('font-size', args[1]));
 		}
 
 		if (args[2]) {
-			props.push(new Decl('font-weight', args[2]));
+			props.push(decl('font-weight', args[2]));
 		}
 
 		if (args[3]) {
-			props.push(new Decl('line-height', args[3]));
+			props.push(decl('line-height', args[3]));
 		}
 
 		return props;
@@ -119,7 +119,7 @@ describe('mixins', () => {
 			{
 				mixins: {
 					opacity(value) {
-						return new Decl('opacity', helpers.calcOpacity(value));
+						return decl('opacity', helpers.calcOpacity(value));
 					}
 				}
 			}
@@ -154,7 +154,7 @@ describe('mixins', () => {
 				mixins: {
 					test: {
 						mixin() {
-							return new Decl('color', '#fff');
+							return decl('color', '#fff');
 						}
 					}
 				}
@@ -176,9 +176,9 @@ describe('mixins', () => {
 				mixins: {
 					mixin(obj) {
 						return [
-							new Decl('font-weight', obj.weight),
-							new Decl('padding', obj.padding),
-							new Decl('background-image', obj.background)
+							decl('font-weight', obj.weight),
+							decl('padding', obj.padding),
+							decl('background-image', obj.background)
 						];
 					}
 				}
@@ -201,7 +201,7 @@ describe('mixins', () => {
 			}`,
 			{ mixins: Object.assign(mixins, {
 					fontObj(obj) {
-						return new Decl('font-family', obj.font);
+						return decl('font-family', obj.font);
 					}
 				})
 			}
@@ -291,7 +291,7 @@ describe('declarations', () => {
 			{
 				mixins: {
 					margin(...args) {
-						return Decl.createMany([
+						return decl.createMany([
 							'margin-top',
 							'margin-right',
 							'margin-left',
@@ -315,7 +315,7 @@ describe('declarations', () => {
 			{
 				mixins: {
 					verticalPadding(value) {
-						return Decl.createMany([
+						return decl.createMany([
 							'padding-top',
 							'padding-bottom'
 						], helpers.unit(value));
@@ -339,7 +339,7 @@ describe('declarations', () => {
 			{
 				mixins: {
 					margin(obj) {
-						return Decl.createManyFromObj(obj, 'margin');
+						return decl.createManyFromObj(obj, 'margin');
 					}
 				}
 			}
@@ -355,7 +355,7 @@ describe('rules', () => {
 			{
 				mixins: {
 					ruleMixin() {
-						return new Rule('&:after', [ new Decl('color', '#fff') ]);
+						return rule('&:after', [ decl('color', '#fff') ]);
 					}
 				}
 			}
