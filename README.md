@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/nathanhood/postcss-js-mixins.svg?branch=master)](https://travis-ci.org/nathanhood/postcss-js-mixins)
 [![codecov](https://codecov.io/gh/nathanhood/postcss-js-mixins/branch/master/graph/badge.svg)](https://codecov.io/gh/nathanhood/postcss-js-mixins)
+[![npm](https://badge.fury.io/js/postcss-js-mixins.svg)](https://badge.fury.io/js/postcss-js-mixins)
 
 <img align="right" width="135" height="95" src="http://postcss.github.io/postcss/logo-leftp.png" title="Philosopher’s stone, logo of PostCSS">
 
@@ -61,7 +62,7 @@ Default: `{}`
 Register mixins that you want to reference in your style sheets. 
 
 ```js
-const Decl = require('postcss-js-mixins/lib/Declaration');
+const decl = require('postcss-js-mixins/lib/declaration');
 const { isEmpty } = require('postcss-js-mixins/lib/helpers');
 
 require('postcss-js-mixins')({
@@ -74,7 +75,7 @@ require('postcss-js-mixins')({
 				value = '20px';
 			}
 
-			return new Decl('margin-bottom', value);
+			return decl('margin-bottom', value);
 		}
 	}
 });
@@ -97,10 +98,10 @@ Declarations take a CSS property and it's value as arguments.
 
 
 ```js
-const Decl = require('postcss-js-mixins/lib/Declaration');
+const decl = require('postcss-js-mixins/lib/declaration');
 
 // Create single declaration
-new Decl(prop, value);
+decl(prop, value);
 ```
 
 ### Rule
@@ -108,12 +109,12 @@ new Decl(prop, value);
 Rules take a selector and an array of `Declaration` objects.
 
 ```js
-const Rule = require('postcss-js-mixins/lib/Rule');
+const rule = require('postcss-js-mixins/lib/rule');
 
 // Create single declaration
-new Rule('.block:after', [
-	new Decl(prop, value),
-	new Decl(prop, value)
+rule('.block:after', [
+	decl(prop, value),
+	decl(prop, value)
 ]);
 ```
 
@@ -125,7 +126,7 @@ Matches indexes from two arrays to produce declarations for each. This is used w
 ```js
 // Create multiple declarations
 function position(...args) {
-	return Decl.createMany(['top', 'right', 'left', 'bottom'], args);
+	return decl.createMany(['top', 'right', 'left', 'bottom'], args);
 }
 ```
 ```css
@@ -137,7 +138,7 @@ When passing arguments as `object: key` pairs, the first argument in the execute
 ```js
 // Create multiple declarations from an object
 function background(obj) {
-	return Decl.createManyFromObj(obj, 'background');
+	return decl.createManyFromObj(obj, 'background');
 }
 ```
 ```css
@@ -154,6 +155,8 @@ const { darken, lighten } = require('postcss-js-mixins/lib/colorHelpers');
 
 #### List of Helper Methods
 
+- darken
+- lighten
 - calcOpacity
 - hexToRgba
 - isColor
@@ -169,4 +172,4 @@ const { darken, lighten } = require('postcss-js-mixins/lib/colorHelpers');
 - type
 - unit
 
-**Note:** This plugin uses [TinyColor](https://github.com/bgrins/TinyColor) which has a large number of other color helper methods.
+**Note:** This plugin uses [TinyColor](https://github.com/bgrins/TinyColor) which has a large number of other color helper methods that can easily be exposed if requested.
