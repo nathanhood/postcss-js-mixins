@@ -13,6 +13,8 @@ module.exports = postcss.plugin('postcss-js-mixins', (options = {}) => {
 	function isNumber(value) {
 		let val = parseFloat(value);
 
+		// Check that parseFloat did not create NaN or infinity and
+		// make sure no other characters exist in original value but numerical digits
 		return ! isNaN(val) && isFinite(val) && ! /[^\d.]/.test(value);
 	}
 
@@ -31,6 +33,10 @@ module.exports = postcss.plugin('postcss-js-mixins', (options = {}) => {
 				if (isNumber(arg)) {
 					return parseFloat(arg);
 				} else if (typeof arg === 'string') {
+					if (arg === 'false' || arg === 'true') {
+						return arg === 'true';
+					}
+
 					return arg.length ? arg : undefined;
 				}
 

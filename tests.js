@@ -126,6 +126,30 @@ describe('mixins', () => {
 		);
 	});
 
+	it('should convert "true" and "false" arguments to boolean', () => {
+		return process(
+			`.block {
+				conditional(true);
+				conditional(false);
+			}`,
+			`.block {
+				opacity: 0;
+				color: blue;
+			}`,
+			{
+				mixins: {
+					conditional(arg) {
+						if (arg === true) {
+							return decl('opacity', 0);
+						} else if (arg === false) {
+							return decl('color', 'blue');
+						}
+					}
+				}
+			}
+		);
+	});
+
 	it('should parse unmatched variables as individual parameters', () => {
 		return process(
 			`.block {
