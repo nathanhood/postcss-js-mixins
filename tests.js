@@ -166,26 +166,6 @@ describe('mixins', () => {
 		);
 	});
 
-	it('should parse nested mixin property object with dot notation', () => {
-		return process(
-			`.block {
-				test.mixin();
-			}`,
-			`.block {
-				color: #fff;
-			}`,
-			{
-				mixins: {
-					test: {
-						mixin() {
-							return decl('color', '#fff');
-						}
-					}
-				}
-			}
-		);
-	});
-
 	it('should handle key: value pairs as arguments', () => {
 		return process(
 			`.block {
@@ -198,11 +178,59 @@ describe('mixins', () => {
 			}`,
 			{
 				mixins: {
-					mixin(obj) {
+					mixin(padding, background, weight) {
 						return [
-							decl('font-weight', obj.weight),
-							decl('padding', obj.padding),
-							decl('background-image', obj.background)
+							decl('font-weight', weight),
+							decl('padding', padding),
+							decl('background-image', background)
+						];
+					}
+				}
+			}
+		);
+	});
+
+	it('should fallback to default parameters', () => {
+		return process(
+			`.block {
+				mixin(background: url('test.png'));
+			}`,
+			`.block {
+				font-weight: normal;
+				padding: 0;
+				background-image: url('test.png');
+			}`,
+			{
+				mixins: {
+					mixin(padding = 0, background, weight = 'normal') {
+						return [
+							decl('font-weight', weight),
+							decl('padding', padding),
+							decl('background-image', background)
+						];
+					}
+				}
+			}
+		);
+	});
+
+	it('should accept a combination of argument formats', () => {
+		return process(
+			`.block {
+				mixin(bold, bottom: 20rem, 15px);
+			}`,
+			`.block {
+				font-weight: bold;
+				padding-top: 15px;
+				padding-bottom: 20rem;
+			}`,
+			{
+				mixins: {
+					mixin(weight, top = '10rem', bottom = '0rem') {
+						return [
+							decl('font-weight', weight),
+							decl('padding-top', top),
+							decl('padding-bottom', bottom)
 						];
 					}
 				}
@@ -224,8 +252,8 @@ describe('mixins', () => {
 				font-family: 'Open Sans', Arial, serif;
 			}`,
 			{ mixins: Object.assign(mixins, {
-					fontObj(obj) {
-						return decl('font-family', obj.font);
+					fontObj(font) {
+						return decl('font-family', font);
 					}
 				})
 			}
@@ -356,13 +384,20 @@ describe('declarations', () => {
 			}`,
 			`.block {
 				margin-top: 1rem;
-				margin-bottom: 4rem;
 				margin-right: 2rem;
+				margin-bottom: 4rem;
 				margin-left: 3rem;
 			}`,
 			{
 				mixins: {
-					margin(obj) {
+					margin(top, right, bottom, left) {
+						let obj = {
+							top: top,
+							right: right,
+							bottom: bottom,
+							left: left
+						};
+
 						return decl.createManyFromObj(obj, 'margin');
 					}
 				}

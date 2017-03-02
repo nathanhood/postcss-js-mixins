@@ -4,7 +4,8 @@ const postcss = require('postcss');
 const helpers = require('./lib/helpers');
 
 module.exports = postcss.plugin('postcss-js-mixins', (options = {}) => {
-	let mixins = options.mixins || {};
+	let mixins = options.mixins || {},
+		mixinArguments = {};
 
 	if (options.units) {
 		helpers.setDefaultUnits(options.units);
@@ -19,6 +20,67 @@ module.exports = postcss.plugin('postcss-js-mixins', (options = {}) => {
 	}
 
 	/**
+	 * Convert argument to proper type
+	 *
+	 * @param {string} arg
+	 * @returns {*}
+	 */
+	function castArgument(arg) {
+		if (isNumber(arg)) {
+			return parseFloat(arg);
+		} else if (typeof arg === 'string') {
+			if (arg === 'false' || arg === 'true') {
+				return arg === 'true';
+			}
+
+			return arg.length ? arg : undefined;
+		}
+
+		return arg;
+	}
+
+	/**
+	 * Generate arguments array
+	 *
+	 * @param {string} name
+	 * @param {function} mixin
+	 * @param {object} obj - mixin arguments property
+	 * @returns {Array}
+	 */
+	function getArguments(name, mixin, obj) {
+		let named = obj.named,
+			ordered = obj.ordered,
+			args = [],
+			parameters;
+
+		// Cache function parameter names
+		if (! mixinArguments[name]) {
+			mixinArguments[name] = mixin.toString()
+				.match(/(function)?.*?\(([^)]*)\)/)[2]
+				.split(',')
+				.map(function(arg) {
+					return arg.split('=')[0].trim();
+				});
+		}
+
+		parameters = mixinArguments[name];
+
+		Object.keys(named).forEach(key => {
+			parameters.forEach((param, i) => {
+				if (key === param) {
+					args[i] = castArgument(named[key]);
+				}
+			});
+		});
+
+		ordered.forEach((arg, i) => {
+			args[i] = castArgument(arg);
+		});
+
+		return args;
+	}
+
+	/**
 	 * Evaluate mixin
 	 *
 	 * @param {object} node - postcss.Node
@@ -26,34 +88,15 @@ module.exports = postcss.plugin('postcss-js-mixins', (options = {}) => {
 	 * @returns {array|object}
 	 */
 	function evalMixin(node, result) {
-		let segs = node.name.split('.'),
-			key = segs.shift(),
-			mixin = mixins[key],
-			args = node.arguments.map(arg => {
-				if (isNumber(arg)) {
-					return parseFloat(arg);
-				} else if (typeof arg === 'string') {
-					if (arg === 'false' || arg === 'true') {
-						return arg === 'true';
-					}
+		let key = node.name,
+			mixin = mixins[key];
 
-					return arg.length ? arg : undefined;
-				}
-
-				return arg;
-			});
-
-		while (segs.length && mixin.hasOwnProperty(segs[0])) {
-			mixin = mixin[segs[0]];
-			segs.shift();
-		}
-
-		if (! mixin || segs.length) {
+		if (! mixin) {
 			node.warn(result, 'Mixin not found.');
 			return [];
 		}
 
-		return mixin.apply(mixins, args);
+		return mixin.apply(mixins, getArguments(key, mixin, node.arguments));
 	}
 
 	/**
