@@ -70,11 +70,7 @@ require('postcss-js-mixins')({
 		/**
 		* Example of creating a shorthand with default value
 		*/
-		spaced(value) {
-			if (isEmpty(value)) {
-				value = '20px';
-			}
-
+		spaced(value = '20px') {
 			return decl('margin-bottom', value);
 		}
 	}
@@ -134,15 +130,27 @@ position(10%, 0, false, 0);
 ```
 
 #### `createManyFromObj`
-When passing arguments as `object: key` pairs, the first argument in the executed mixin will be an object with all arguments aggregated together. This allows for the user to pass in arguments in arbitrary order. This function can also take a prefix as the second argument that will be prepended to all declaration properties.
+Takes an object with `property: value` pairs and an optional prefix to prepend to each property value.
+
 ```js
 // Create multiple declarations from an object
-function background(obj) {
-	return decl.createManyFromObj(obj, 'background');
+function padding(top = 0, right = 0, bottom = 0, left = 0) {
+	return decl.createManyFromObj({
+		top: top,
+		right: right,
+		bottom: bottom,
+		left: left
+	}, 'padding');
 }
 ```
 ```css
-position(color: #f7f7f7);
+padding(top: '10px', left: '12px');
+
+/* Output */
+padding-top: 10px;
+padding-right: 0;
+padding-bottom: 0;
+padding-left: 12px;
 ```
 
 ### `Helper Methods`
