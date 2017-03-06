@@ -36,7 +36,6 @@ module.exports = postcss.plugin('postcss-js-mixins', (options = {}) => {
 					if (arg === 'false' || arg === 'true') {
 						return arg === 'true';
 					}
-
 					return arg.length ? arg : undefined;
 				}
 
