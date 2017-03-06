@@ -272,6 +272,23 @@ describe('mixins', () => {
 			1
 		);
 	});
+
+	it('should generate a single declaration', () => {
+		return process(
+			`.block {
+				mixin();
+			}`,
+			`.block {
+			}`,
+			{
+				mixins: {
+					mixin() {
+						return false;
+					}
+				}
+			}
+		);
+	});
 });
 
 describe('default units', () => {
