@@ -28,15 +28,13 @@ module.exports = postcss.plugin('postcss-js-mixins', (options = {}) => {
 	function castArgument(arg) {
 		if (isNumber(arg)) {
 			return parseFloat(arg);
-		} else if (typeof arg === 'string') {
-			if (arg === 'false' || arg === 'true') {
-				return arg === 'true';
-			}
-
-			return arg.length ? arg : undefined;
 		}
 
-		return arg;
+		if (arg === 'false' || arg === 'true') {
+			return arg === 'true';
+		}
+
+		return arg.length ? arg : undefined;
 	}
 
 	/**

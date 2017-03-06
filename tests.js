@@ -272,6 +272,23 @@ describe('mixins', () => {
 			1
 		);
 	});
+
+	it('should generate a single declaration', () => {
+		return process(
+			`.block {
+				mixin();
+			}`,
+			`.block {
+			}`,
+			{
+				mixins: {
+					mixin() {
+						return false;
+					}
+				}
+			}
+		);
+	});
 });
 
 describe('default units', () => {
@@ -560,6 +577,22 @@ describe('helpers: prefix', () => {
 describe('helpers: toDashCase', () => {
 	it('should return camelCase input to dash case', () => {
 		expect(helpers.toDashCase('toDashCase')).to.equal('to-dash-case');
+	});
+});
+
+describe('helpers: toNumber', () => {
+	it('should return percentage as string to decimal', () => {
+		expect(helpers.toNumber('5%')).to.equal(0.05);
+		expect(helpers.toNumber('12.5%')).to.equal(0.125);
+		expect(helpers.toNumber('200%')).to.equal(2);
+	});
+});
+
+describe('helpers: toPercentage', () => {
+	it('should return decimal to percentage as string', () => {
+		expect(helpers.toPercentage(0.05)).to.equal('5%');
+		expect(helpers.toPercentage(0.125)).to.equal('12.5%');
+		expect(helpers.toPercentage(2)).to.equal('200%');
 	});
 });
 
