@@ -1,6 +1,6 @@
 {
   "name": "postcss-js-mixins",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "PostCSS plugin for custom mixin syntax",
   "main": "index.js",
   "scripts": {
