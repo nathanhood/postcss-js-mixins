@@ -54,7 +54,10 @@ module.exports = postcss.plugin('postcss-js-mixins', (options = {}) => {
 		// Cache function parameter names
 		if (! mixinArguments[name]) {
 			mixinArguments[name] = mixin.toString()
-				.match(/(?:function)?\s?.*?\(([^)]*)\)/)[1]
+				// Strip out quoted strings (stripping possible commas from parameters)
+				.replace(/'((?:[^'\\])*)'|"((?:[^"\\])*)"/g, '')
+				// Pull out parameters from function
+				.match(/(?:function)?\s?.*?\s?\(([^)]*)\)/)[1]
 				.split(',')
 				.map(function(arg) {
 					return arg.split('=')[0].trim();
