@@ -238,6 +238,50 @@ describe('mixins', () => {
 		);
 	});
 
+	it('should handle default values with commas', () => {
+		return process(
+			`.block {
+				mixin();
+			}`,
+			`.block {
+				background-color: rgba(0, 0, 0, .2);
+				background-image: url("foo.jpg");
+			}`,
+			{
+				mixins: {
+					mixin(color = 'rgba(0, 0, 0, .2)', url = 'url("foo.jpg")') {
+						return [
+							decl('background-color', color),
+							decl('background-image', url)
+						];
+					}
+				}
+			}
+		);
+	});
+
+	it('should handle default values with commas using double quotes', () => {
+		return process(
+			`.block {
+				mixin();
+			}`,
+			`.block {
+				background-color: rgba(0, 0, 0, .2);
+				background-image: url('foo.jpg');
+			}`,
+			{
+				mixins: {
+					mixin(color = "rgba(0, 0, 0, .2)", url = "url('foo.jpg')") {
+						return [
+							decl('background-color', color),
+							decl('background-image', url)
+						];
+					}
+				}
+			}
+		);
+	});
+
 	it('should handle font-family argument', () => {
 		return process(
 			`.block {
