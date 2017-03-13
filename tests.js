@@ -542,6 +542,18 @@ describe('helpers: isEmpty', () => {
 	});
 });
 
+describe('helpers: isFraction', () => {
+	it('should identify string fractions as fractions', () => {
+		expect(helpers.isFraction('4/3')).to.equal(true);
+	});
+
+	it('should not identify any other types', () => {
+		expect(helpers.isFraction(4/3)).to.equal(false);
+		expect(helpers.isFraction(1.3333)).to.equal(false);
+		expect(helpers.isFraction('1.3333/3')).to.equal(false);
+	});
+});
+
 describe('helpers: isNumber', () => {
 	it('should identify string numbers and numbers as a number', () => {
 		expect(helpers.isNumber('2')).to.equal(true);
