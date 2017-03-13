@@ -126,6 +126,24 @@ describe('mixins', () => {
 		);
 	});
 
+	it('should convert fractions', () => {
+		return process(
+			`.block {
+				ratio(4/3);
+			}`,
+			`.block {
+				width: 75%;
+			}`,
+			{
+				mixins: {
+					ratio(value) {
+						return decl('width', helpers.toPercentage(1 / value));
+					}
+				}
+			}
+		);
+	});
+
 	it('should convert "true" and "false" arguments to boolean', () => {
 		return process(
 			`.block {
