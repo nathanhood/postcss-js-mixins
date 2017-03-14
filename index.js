@@ -30,6 +30,12 @@ module.exports = postcss.plugin('postcss-js-mixins', (options = {}) => {
 			return parseFloat(arg);
 		}
 
+		if (helpers.isFraction(arg)) {
+			arg = arg.split('/');
+
+			return arg[0] / arg[1];
+		}
+
 		if (arg === 'false' || arg === 'true') {
 			return arg === 'true';
 		}

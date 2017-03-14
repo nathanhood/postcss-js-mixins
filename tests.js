@@ -126,6 +126,24 @@ describe('mixins', () => {
 		);
 	});
 
+	it('should convert fractions', () => {
+		return process(
+			`.block {
+				ratio(4/3);
+			}`,
+			`.block {
+				width: 75%;
+			}`,
+			{
+				mixins: {
+					ratio(value) {
+						return decl('width', helpers.toPercentage(1 / value));
+					}
+				}
+			}
+		);
+	});
+
 	it('should convert "true" and "false" arguments to boolean', () => {
 		return process(
 			`.block {
@@ -539,6 +557,18 @@ describe('helpers: isEmpty', () => {
 
 	it('should identify undefined as empty', () => {
 		expect(helpers.isEmpty()).to.equal(true);
+	});
+});
+
+describe('helpers: isFraction', () => {
+	it('should identify string fractions as fractions', () => {
+		expect(helpers.isFraction('4/3')).to.equal(true);
+	});
+
+	it('should not identify any other types', () => {
+		expect(helpers.isFraction(4/3)).to.equal(false);
+		expect(helpers.isFraction(1.3333)).to.equal(false);
+		expect(helpers.isFraction('1.3333/3')).to.equal(false);
 	});
 });
 
