@@ -154,7 +154,7 @@ padding-left: 12px;
 ```
 
 ### `Helper Methods`
-Helper methods have been provided in order to make writing mixin functions.
+Helper methods have been provided in order to make writing mixins easier.
 
 ```js
 const helpers = require('postcss-js-mixins/lib/helpers');
