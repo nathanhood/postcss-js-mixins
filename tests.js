@@ -614,6 +614,12 @@ describe('helpers: isPercentage', () => {
 	});
 });
 
+describe('helpers: isProvided', () => {
+	it('should identify values that are not strictly undefined or false', () => {
+		expect(helpers.isProvided(0)).to.equal(true);
+	});
+});
+
 describe('helpers: isString', () => {
 	it('should identify string', () => {
 		expect(helpers.isString('string')).to.equal(true);
