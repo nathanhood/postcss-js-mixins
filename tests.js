@@ -515,17 +515,25 @@ describe('helpers: calcOpacity', () => {
 	});
 });
 
-describe('helpers: hexToRgba', () => {
+describe('helpers: toRgba', () => {
 	it('should convert a hex value to RGB', () => {
-		return expect(helpers.hexToRgba('#f5830f')).to.equal('rgb(245, 131, 15)');
+		return expect(helpers.toRgba('#f5830f')).to.equal('rgb(245, 131, 15)');
 	});
 
 	it('should convert a hex value with opacity into RGBA', () => {
-		return expect(helpers.hexToRgba('#f5830f', 0.2)).to.equal('rgba(245, 131, 15, 0.2)');
+		return expect(helpers.toRgba('#f5830f', 0.2)).to.equal('rgba(245, 131, 15, 0.2)');
 	});
 
 	it('should convert three character hex value into proper rgb', () => {
-		return expect(helpers.hexToRgba('#fff')).to.equal('rgb(255, 255, 255)');
+		return expect(helpers.toRgba('#fff')).to.equal('rgb(255, 255, 255)');
+	});
+
+	it('should convert a color keyword to RGB', () => {
+		return expect(helpers.toRgba('blue')).to.equal('rgb(0, 0, 255)');
+	});
+
+	it('should convert a color keyword with opacity into RGBA', () => {
+		return expect(helpers.toRgba('blue', '50%')).to.equal('rgba(0, 0, 255, 0.5)');
 	});
 });
 
