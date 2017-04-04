@@ -172,6 +172,7 @@ const { darken, lighten } = require('postcss-js-mixins/lib/colorHelpers');
 - isNumber
 - isObject
 - isPercentage
+- isProvided
 - isString
 - isUnit
 - prefix
