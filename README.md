@@ -178,6 +178,7 @@ const { darken, lighten } = require('postcss-js-mixins/lib/colorHelpers');
 - prefix
 - setDefaultUnits
 - toDashCase
+- toDegrees
 - type
 - unit
 

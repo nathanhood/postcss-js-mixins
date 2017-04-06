@@ -668,6 +668,13 @@ describe('helpers: toDashCase', () => {
 	});
 });
 
+describe('helpers: toDegrees', () => {
+	it('should append deg unit to value when not present', () => {
+		expect(helpers.toDegrees(45)).to.equal('45deg');
+		expect(helpers.toDegrees('90deg')).to.equal('90deg');
+	});
+});
+
 describe('helpers: toNumber', () => {
 	it('should return percentage as string to decimal', () => {
 		expect(helpers.toNumber('5%')).to.equal(0.05);
