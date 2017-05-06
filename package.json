@@ -28,7 +28,7 @@
     "postcss-wee-syntax": "^2.0.0"
   },
   "dependencies": {
-    "postcss": "^5.2.6",
+    "postcss": "^6.0.0",
     "tinycolor2": "^1.4.1"
   }
 }
